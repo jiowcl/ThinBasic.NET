@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Sample\test_gui.tbasic">
+    <None Include="Sample\test_fib.tbasic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

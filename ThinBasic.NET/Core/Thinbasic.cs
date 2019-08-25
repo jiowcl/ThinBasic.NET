@@ -49,5 +49,44 @@ namespace ThinBasic.NET.Core
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddIncludePath", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         public static extern int AddIncludePath([MarshalAs(UnmanagedType.LPWStr)] string sNewIncludeDir);
+
+
+
+        /// <summary>
+        /// GetLastError
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetLastError", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        public static extern int GetLastError();
+
+        /// <summary>
+        /// ErrorFlag
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorFlag", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        public static extern int ErrorFlag();
+
+        /// <summary>
+        /// ErrorFree
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorFree", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        public static extern int ErrorFree();
+
+        /// <summary>
+        /// ErrorUserConfirmed
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorUserConfirmed", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        public static extern int ErrorUserConfirmed();
+
+        /// <summary>
+        /// RunTimeError
+        /// </summary>
+        /// <param name="ErrorCode"></param>
+        /// <param name="AdditionalInfo"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_RunTimeError", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        public static extern int RunTimeError(int ErrorCode, [MarshalAs(UnmanagedType.LPWStr)] string AdditionalInfo);
     }
 }
