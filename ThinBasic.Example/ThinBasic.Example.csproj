@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Sample\test_date.tbasic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Sample\test_fib.tbasic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
