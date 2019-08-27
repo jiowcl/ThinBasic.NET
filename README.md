@@ -5,11 +5,11 @@
 # Environment
 
 - Windows 7 above (recommend)
-- ThinBasic 1.10 above
+- ThinBasic 1.10 
 
 # How to Build
 
-Building requires Visual Studio 2019 Community and test under Windows 10.
+Building requires [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
 
 # Example
 
