@@ -22,16 +22,16 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="hScript"></param>
         /// <param name="sBuffer"></param>
-        /// <param name="BufferType"></param>
-        /// <param name="Options"></param>
-        /// <param name="DebugMode"></param>
-        /// <param name="LogMode"></param>
-        /// <param name="ObfuscateMode"></param>
-        /// <param name="CallingProgram"></param>
-        /// <param name="DependancyMode"></param>
+        /// <param name="bufferType"></param>
+        /// <param name="options"></param>
+        /// <param name="debugMode"></param>
+        /// <param name="logMode"></param>
+        /// <param name="obfuscateMode"></param>
+        /// <param name="callingProgram"></param>
+        /// <param name="dependancyMode"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Run", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        public static extern int Run(int hScript, [MarshalAs(UnmanagedType.BStr)] string sBuffer, int BufferType, int Options, int DebugMode, int LogMode, int ObfuscateMode, int CallingProgram, int DependancyMode);
+        public static extern int Run(int hScript, [MarshalAs(UnmanagedType.BStr)] string sBuffer, int bufferType, int options, int debugMode, int logMode, int obfuscateMode, int callingProgram, int dependancyMode);
 
         /// <summary>
         /// Release
@@ -48,8 +48,6 @@ namespace ThinBasic.NET.Core
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddIncludePath", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         public static extern int AddIncludePath([MarshalAs(UnmanagedType.LPWStr)] string sNewIncludeDir);
-
-
 
         /// <summary>
         /// GetLastError
@@ -82,10 +80,10 @@ namespace ThinBasic.NET.Core
         /// <summary>
         /// RunTimeError
         /// </summary>
-        /// <param name="ErrorCode"></param>
-        /// <param name="AdditionalInfo"></param>
+        /// <param name="errorCode"></param>
+        /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_RunTimeError", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        public static extern int RunTimeError(int ErrorCode, [MarshalAs(UnmanagedType.LPWStr)] string AdditionalInfo);
+        public static extern int RunTimeError(int errorCode, [MarshalAs(UnmanagedType.LPWStr)] string sAdditionalInfo);
     }
 }
