@@ -13,6 +13,8 @@ namespace ThinBasic.Example
         /// <summary>
         /// Main
         /// </summary>
+        /// <param name="args"></param>
+        /// <returns>Returns void.</returns>
         static void Main(string[] args)
         {
             string scriptPath = @"Sample\test_fib.tbasic";

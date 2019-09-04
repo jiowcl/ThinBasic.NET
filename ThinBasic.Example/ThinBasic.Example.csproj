@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3501BBEE-2C2A-47B1-B407-D7C710AE566D}</ProjectGuid>
+    <ProjectGuid>{039B05BE-7B73-45FA-97F1-84E7E300EC83}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>ThinBasic.Example</RootNamespace>
     <AssemblyName>ThinBasic.Example</AssemblyName>
@@ -17,7 +17,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -31,9 +31,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>ThinBasic.Example.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -52,22 +49,20 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Sample\test_date.tbasic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Sample\test_fib.tbasic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Sample\test_gui.tbasic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ThinBasic.NET\ThinBasic.NET.csproj">
-      <Project>{be22848f-e1df-4904-b566-da29a905e016}</Project>
+      <Project>{0f05238c-23ff-4d59-8bec-ffe311282f48}</Project>
       <Name>ThinBasic.NET</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Sample\test_gui.tbasic">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

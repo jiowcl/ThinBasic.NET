@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // 變更這些屬性的值即可修改組件的相關
 // 資訊。
 [assembly: AssemblyTitle("ThinBasic.Example")]
-[assembly: AssemblyDescription("ThinBasic.NET example")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Inwazy Technology")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ThinBasic.Example")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
-[assembly: AssemblyTrademark("Ji-Feng Tsai")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // 將 ComVisible 設為 false 可對 COM 元件隱藏
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 下列 GUID 為專案公開 (Expose) 至 COM 時所要使用的 typelib ID
-[assembly: Guid("3501bbee-2c2a-47b1-b407-d7c710ae566d")]
+[assembly: Guid("039b05be-7b73-45fa-97f1-84e7e300ec83")]
 
 // 組件的版本資訊由下列四個值所組成:
 //
