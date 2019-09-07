@@ -31,7 +31,15 @@ namespace ThinBasic.NET.Core
         /// <param name="dependancyMode"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Run", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        public static extern int Run(int hScript, [MarshalAs(UnmanagedType.BStr)] string sBuffer, int bufferType, int options, int debugMode, int logMode, int obfuscateMode, int callingProgram, int dependancyMode);
+        public static extern int Run(int hScript,
+                                     [MarshalAs(UnmanagedType.BStr)] string sBuffer,
+                                     int bufferType,
+                                     int options,
+                                     int debugMode,
+                                     int logMode,
+                                     int obfuscateMode,
+                                     int callingProgram,
+                                     int dependancyMode);
 
         /// <summary>
         /// Release
