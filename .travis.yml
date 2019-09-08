@@ -1,2 +1,3 @@
 language: csharp
-solution: ThinBasic.NET.sln
+mono: none
+solution: "./ThinBasic.NET.sln"
