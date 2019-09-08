@@ -1,3 +1,4 @@
 language: csharp
+sudo: required
 mono: none
 solution: "./ThinBasic.NET.sln"
