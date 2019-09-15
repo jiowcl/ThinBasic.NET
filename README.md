@@ -37,7 +37,7 @@ Thinbasic.Release(0);
 
 ## License
 
-Copyright (c) 2017-2019 Ji-Feng Tsai.<br/>
+Copyright (c) 2017-2019 Ji-Feng Tsai.  
 
 Code released under the MIT license.
 
