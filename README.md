@@ -8,8 +8,14 @@
 
 ## Environment
 
--  Windows 7 above (recommend)
--  ThinBasic 1.10 
+- Windows 7 above (recommend)
+- ThinBasic 1.10 
+
+## NuGet Installation
+
+```powershell
+PM> Install-Package ThinBasic.NET
+```
 
 ## How to Build
 
@@ -37,8 +43,8 @@ Code released under the MIT license.
 
 ## TODO
 
--  More Functions defined in thinCore.dll
--  More examples
+- More Functions defined in thinCore.dll
+- More examples
 
 ## Donation
 
