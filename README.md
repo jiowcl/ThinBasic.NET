@@ -5,16 +5,16 @@
 ![GitHub](https://img.shields.io/github/license/jiowcl/MQL-Quotes.svg)
 ![Nuget](https://img.shields.io/nuget/v/ThinBasic.NET)
 
-# Environment
+## Environment
 
-- Windows 7 above (recommend)
-- ThinBasic 1.10 
+-  Windows 7 above (recommend)
+-  ThinBasic 1.10 
 
-# How to Build
+## How to Build
 
 Building requires [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
 
-# Example
+## Example
 
 ```csharp
 string scriptPath = @"Sample\test.tbasic";
@@ -28,18 +28,18 @@ int result = Thinbasic.Run(hThinbasic, scriptBuffer, bufferType, 0, 0, 0, 0, cal
 Thinbasic.Release(0);
 ```
 
-# License
+## License
 
 Copyright (c) 2017-2019 Ji-Feng Tsai.<br/>
 
 Code released under the MIT license.
 
-# TODO
+## TODO
 
-- More Functions defined in thinCore.dll
-- More examples
+-  More Functions defined in thinCore.dll
+-  More examples
 
-# Donation
+## Donation
 
 If this application help you reduce time to trading, you can give me a cup of coffee :)
 
