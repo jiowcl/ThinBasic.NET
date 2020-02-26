@@ -15,7 +15,7 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Init", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int InitNative(int hWnd, int cInstance, [MarshalAs(UnmanagedType.LPWStr)] string sKey);
+        private static extern int InitNative(int hWnd, int cInstance, [MarshalAs(UnmanagedType.AnsiBStr)] string sKey);
 
         /// <summary>
         /// RunNative
@@ -55,7 +55,7 @@ namespace ThinBasic.NET.Core
         /// <param name="sNewIncludeDir"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddIncludePath", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int AddIncludePathNative([MarshalAs(UnmanagedType.LPWStr)] string sNewIncludeDir);
+        private static extern int AddIncludePathNative([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir);
 
         /// <summary>
         /// GetLastErrorNative
@@ -92,7 +92,7 @@ namespace ThinBasic.NET.Core
         /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_RunTimeError", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int RunTimeErrorNative(int errorCode, [MarshalAs(UnmanagedType.LPWStr)] string sAdditionalInfo);
+        private static extern int RunTimeErrorNative(int errorCode, [MarshalAs(UnmanagedType.AnsiBStr)] string sAdditionalInfo);
 
         /// <summary>
         /// Init
@@ -101,7 +101,7 @@ namespace ThinBasic.NET.Core
         /// <param name="cInstance"></param>
         /// <param name="sKey"></param>
         /// <returns>Returns int.</returns>
-        public static int Init(int hWnd, int cInstance, [MarshalAs(UnmanagedType.LPWStr)] string sKey)
+        public static int Init(int hWnd, int cInstance, [MarshalAs(UnmanagedType.AnsiBStr)] string sKey)
         {
             return InitNative(hWnd, cInstance, sKey);
         }
@@ -147,7 +147,7 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sNewIncludeDir"></param>
         /// <returns>Returns int.</returns>
-        public static int AddIncludePath([MarshalAs(UnmanagedType.LPWStr)] string sNewIncludeDir)
+        public static int AddIncludePath([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir)
         {
             return AddIncludePathNative(sNewIncludeDir);
         }
@@ -194,7 +194,7 @@ namespace ThinBasic.NET.Core
         /// <param name="errorCode"></param>
         /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
-        public static int RunTimeError(int errorCode, [MarshalAs(UnmanagedType.LPWStr)] string sAdditionalInfo)
+        public static int RunTimeError(int errorCode, [MarshalAs(UnmanagedType.AnsiBStr)] string sAdditionalInfo)
         {
             return RunTimeErrorNative(errorCode, sAdditionalInfo);
         }
