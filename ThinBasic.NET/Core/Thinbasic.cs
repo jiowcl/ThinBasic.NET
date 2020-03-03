@@ -58,6 +58,14 @@ namespace ThinBasic.NET.Core
         private static extern int AddIncludePathNative([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir);
 
         /// <summary>
+        /// VariableExistsNative
+        /// </summary>
+        /// <param name="vName"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableExists", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableExistsNative([MarshalAs(UnmanagedType.AnsiBStr)] string vName);
+        
+        /// <summary>
         /// GetLastErrorNative
         /// </summary>
         /// <returns>Returns int.</returns>
@@ -150,6 +158,16 @@ namespace ThinBasic.NET.Core
         public static int AddIncludePath([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir)
         {
             return AddIncludePathNative(sNewIncludeDir);
+        }
+
+        /// <summary>
+        /// VariableExists
+        /// </summary>
+        /// <param name="vName"></param>
+        /// <returns>Returns int.</returns>
+        public static int VariableExists([MarshalAs(UnmanagedType.AnsiBStr)] string vName)
+        {
+            return VariableExistsNative(vName);
         }
 
         /// <summary>
