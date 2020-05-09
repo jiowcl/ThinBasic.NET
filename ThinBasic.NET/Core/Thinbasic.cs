@@ -103,6 +103,36 @@ namespace ThinBasic.NET.Core
         private static extern int RunTimeErrorNative(int errorCode, [MarshalAs(UnmanagedType.AnsiBStr)] string sAdditionalInfo);
 
         /// <summary>
+        /// GetRunTimeInfoNative
+        /// </summary>
+        /// <param name="sInfoName"></param>
+        /// <returns>Returns string.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetRunTimeInfo", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.AnsiBStr)]
+        private static extern string GetRunTimeInfoNative([MarshalAs(UnmanagedType.AnsiBStr)] string sInfoName);
+
+        /// <summary>
+        /// CheckEqualTypeMandatoryNative
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_CheckEqualType_Mandatory", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int CheckEqualTypeMandatoryNative();
+
+        /// <summary>
+        /// DetermineTypeNative
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_DetermineType", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int DetermineTypeNative();
+
+        /// <summary>
+        /// ScriptIsObfuscatedNative
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ScriptIsObfuscated", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int ScriptIsObfuscatedNative();
+
+        /// <summary>
         /// Init
         /// </summary>
         /// <param name="hWnd"></param>
@@ -215,6 +245,44 @@ namespace ThinBasic.NET.Core
         public static int RunTimeError(int errorCode, [MarshalAs(UnmanagedType.AnsiBStr)] string sAdditionalInfo)
         {
             return RunTimeErrorNative(errorCode, sAdditionalInfo);
+        }
+
+        /// <summary>
+        /// GetRunTimeInfo
+        /// </summary>
+        /// <param name="sInfoName"></param>
+        /// <returns>Returns string.</returns>
+        [return: MarshalAs(UnmanagedType.AnsiBStr)]
+        public static string GetRunTimeInfo([MarshalAs(UnmanagedType.AnsiBStr)] string sInfoName)
+        {
+            return GetRunTimeInfoNative(sInfoName);
+        }
+
+        /// <summary>
+        /// CheckEqualTypeMandatory
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        public static int CheckEqualTypeMandatory()
+        {
+            return CheckEqualTypeMandatoryNative();
+        }
+
+        /// <summary>
+        /// DetermineType
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        public static int DetermineType()
+        {
+            return DetermineTypeNative();
+        }
+
+        /// <summary>
+        /// ScriptIsObfuscated
+        /// </summary>
+        /// <returns>Returns int.</returns>
+        public static int ScriptIsObfuscated()
+        {
+            return ScriptIsObfuscatedNative();
         }
     }
 }

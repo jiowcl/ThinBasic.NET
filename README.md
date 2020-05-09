@@ -2,7 +2,7 @@
 
 .Net Wrapper for ThinBasic Programming Language.
 
-![GitHub](https://img.shields.io/github/license/jiowcl/MQL-Quotes.svg)
+![GitHub](https://img.shields.io/github/license/jiowcl/ThinBasic.NET.svg)
 ![Nuget](https://img.shields.io/nuget/v/ThinBasic.NET)
 ![Travis-Ci](https://travis-ci.com/jiowcl/ThinBasic.NET.svg?branch=master)
 
