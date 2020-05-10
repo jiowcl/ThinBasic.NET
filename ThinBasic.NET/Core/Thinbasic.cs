@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace ThinBasic.NET.Core
 {
@@ -58,13 +59,59 @@ namespace ThinBasic.NET.Core
         private static extern int AddIncludePathNative([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir);
 
         /// <summary>
+        /// LoadSymbolNative
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="returnCode"></param>
+        /// <param name="aFunctionOrSubPointer"></param>
+        /// <param name="rorceOverWrite"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbol", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int LoadSymbolNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite);
+
+        /// <summary>
+        /// LoadSymbolExNative
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="returnCode"></param>
+        /// <param name="aFunctionOrSubPointer"></param>
+        /// <param name="rorceOverWrite"></param>
+        /// <param name="sSyntax"></param>
+        /// <param name="sHelp"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbolEX", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int LoadSymbolExNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName,
+                                                     int returnCode,
+                                                     IntPtr aFunctionOrSubPointer,
+                                                     int rorceOverWrite,
+                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sSyntax,
+                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sHelp);
+
+        /// <summary>
         /// VariableExistsNative
         /// </summary>
         /// <param name="vName"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableExists", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
         private static extern int VariableExistsNative([MarshalAs(UnmanagedType.AnsiBStr)] string vName);
-        
+
+        /// <summary>
+        /// VariableGetValueNumNative
+        /// </summary>
+        /// <param name="sSearchKey"></param>
+        /// <param name="lIndex"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetValueNum", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableGetValueNumNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, int lIndex = 0);
+
+        /// <summary>
+        /// FunctionExistsNative
+        /// </summary>
+        /// <param name="fName"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_FunctionExists", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int FunctionExistsNative([MarshalAs(UnmanagedType.AnsiBStr)] string fName);
+
         /// <summary>
         /// GetLastErrorNative
         /// </summary>
@@ -191,6 +238,39 @@ namespace ThinBasic.NET.Core
         }
 
         /// <summary>
+        /// LoadSymbol
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="returnCode"></param>
+        /// <param name="aFunctionOrSubPointer"></param>
+        /// <param name="rorceOverWrite"></param>
+        /// <returns>Returns int.</returns>
+        public static int LoadSymbol([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite)
+        {
+            return LoadSymbolNative(sSymbolName, returnCode, aFunctionOrSubPointer, rorceOverWrite);
+        }
+
+        /// <summary>
+        /// LoadSymbolExNative
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="returnCode"></param>
+        /// <param name="aFunctionOrSubPointer"></param>
+        /// <param name="rorceOverWrite"></param>
+        /// <param name="sSyntax"></param>
+        /// <param name="sHelp"></param>
+        /// <returns>Returns int.</returns>
+        public static int LoadSymbolEx([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName,
+                                                     int returnCode,
+                                                     IntPtr aFunctionOrSubPointer,
+                                                     int rorceOverWrite,
+                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sSyntax,
+                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sHelp)
+        {
+            return LoadSymbolExNative(sSymbolName, returnCode, aFunctionOrSubPointer, rorceOverWrite, sSyntax, sHelp);
+        }
+
+        /// <summary>
         /// VariableExists
         /// </summary>
         /// <param name="vName"></param>
@@ -198,6 +278,27 @@ namespace ThinBasic.NET.Core
         public static int VariableExists([MarshalAs(UnmanagedType.AnsiBStr)] string vName)
         {
             return VariableExistsNative(vName);
+        }
+
+        /// <summary>
+        /// VariableGetValueNum
+        /// </summary>
+        /// <param name="sSearchKey"></param>
+        /// <param name="lIndex"></param>
+        /// <returns>Returns int.</returns>
+        public static int VariableGetValueNum([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, int lIndex = 0)
+        {
+            return VariableGetValueNumNative(sSearchKey, lIndex);
+        }
+
+        /// <summary>
+        /// FunctionExists
+        /// </summary>
+        /// <param name="fName"></param>
+        /// <returns>Returns int.</returns>
+        public static int FunctionExists([MarshalAs(UnmanagedType.AnsiBStr)] string fName)
+        {
+            return FunctionExistsNative(fName);
         }
 
         /// <summary>
