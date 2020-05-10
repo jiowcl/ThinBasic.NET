@@ -22,8 +22,8 @@ namespace ThinBasic.Example
 
             Console.WriteLine("Script: " + scriptBuffer);
 
-            int bufferType = (int)Enums.BufferType.IsScript;
-            int callingProgram = (int)Enums.CallingProgram.GUI;
+            int bufferType = (int) Enums.BufferType.IsScript;
+            int callingProgram = (int) Enums.CallingProgram.GUI;
 
             try
             {
