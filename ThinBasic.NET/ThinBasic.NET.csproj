@@ -7,11 +7,12 @@
     <Description>.Net Wrapper for ThinBasic Programming Language.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <RepositoryUrl></RepositoryUrl>
-    <PackageReleaseNotes>1.0.0</PackageReleaseNotes>
+    <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
+    <PackageReleaseNotes>1.0.1</PackageReleaseNotes>
     <Authors>Jiowcl</Authors>
     <PackageProjectUrl>https://github.com/jiowcl/ThinBasic.NET</PackageProjectUrl>
     <Platforms>AnyCPU;x86</Platforms>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
