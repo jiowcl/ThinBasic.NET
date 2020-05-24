@@ -96,6 +96,38 @@ namespace ThinBasic.NET.Core
         private static extern int VariableExistsNative([MarshalAs(UnmanagedType.AnsiBStr)] string vName);
 
         /// <summary>
+        /// VariableGetListNative
+        /// </summary>
+        /// <param name="lStackLevel"></param>
+        /// <param name="sSep"></param>
+        /// <returns>Returns string.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetList", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [return: MarshalAs(UnmanagedType.AnsiBStr)]
+        private static extern string VariableGetListNative(int lStackLevel, [MarshalAs(UnmanagedType.AnsiBStr)] string sSep);
+
+        /// <summary>
+        /// VariableGetInfoNative
+        /// </summary>
+        /// <param name="sSearchKey"></param>
+        /// <param name="iMainType"></param>
+        /// <param name="iSubType"></param>
+        /// <param name="iIsArray"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfo", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableGetInfoNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, out int iMainType, out int iSubType, out int iIsArray);
+
+        /// <summary>
+        /// VariableGetInfoPtrNative
+        /// </summary>
+        /// <param name="pVariable"></param>
+        /// <param name="iMainType"></param>
+        /// <param name="iSubType"></param>
+        /// <param name="iIsArray"></param>
+        /// <returns>Returns int.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfoPtr", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableGetInfoPtrNative(int pVariable, out int iMainType, out int iSubType, out int iIsArray);
+
+        /// <summary>
         /// VariableGetValueNumNative
         /// </summary>
         /// <param name="sSearchKey"></param>
@@ -278,6 +310,43 @@ namespace ThinBasic.NET.Core
         public static int VariableExists([MarshalAs(UnmanagedType.AnsiBStr)] string vName)
         {
             return VariableExistsNative(vName);
+        }
+
+        /// <summary>
+        /// VariableGetList
+        /// </summary>
+        /// <param name="lStackLevel"></param>
+        /// <param name="sSep"></param>
+        /// <returns>Returns string.</returns>
+        public static string VariableGetList(int lStackLevel, [MarshalAs(UnmanagedType.AnsiBStr)] string sSep)
+        {
+            return VariableGetListNative(lStackLevel, sSep);
+        }
+
+        /// <summary>
+        /// VariableGetInfo
+        /// </summary>
+        /// <param name="sSearchKey"></param>
+        /// <param name="iMainType"></param>
+        /// <param name="iSubType"></param>
+        /// <param name="iIsArray"></param>
+        /// <returns>Returns int.</returns>
+        public static int VariableGetInfo([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, out int iMainType, out int iSubType, out int iIsArray)
+        {
+            return VariableGetInfoNative(sSearchKey, out iMainType, out iSubType, out iIsArray);
+        }
+
+        /// <summary>
+        /// VariableGetInfoPtr
+        /// </summary>
+        /// <param name="pVariable"></param>
+        /// <param name="iMainType"></param>
+        /// <param name="iSubType"></param>
+        /// <param name="iIsArray"></param>
+        /// <returns>Returns int.</returns>
+        public static int VariableGetInfoPtr(int pVariable, out int iMainType, out int iSubType, out int iIsArray)
+        {
+            return VariableGetInfoPtrNative(pVariable, out iMainType, out iSubType, out iIsArray);
         }
 
         /// <summary>

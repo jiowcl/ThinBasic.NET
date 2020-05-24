@@ -29,7 +29,6 @@ namespace ThinBasic.Example
             {
                 int hThin = Thinbasic.Init(0, 0, "thinbasic");
                 int result = Thinbasic.Run(hThin, scriptBuffer, bufferType, 0, 0, 0, 0, callingProgram, 0);
-
                 Thinbasic.Release(0);
 
                 Console.WriteLine("Error: " + Thinbasic.GetLastError());
