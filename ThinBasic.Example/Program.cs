@@ -1,4 +1,7 @@
-﻿using System;
+﻿// ThinBasic.NET - ThinBasic Programming Language for .NET
+// Copyright (c) 2019 Jiowcl. All rights reserved.
+
+using System;
 using System.IO;
 using System.Text;
 using ThinBasic.NET.Core;

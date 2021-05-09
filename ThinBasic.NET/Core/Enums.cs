@@ -1,4 +1,7 @@
-﻿namespace ThinBasic.NET.Core
+﻿// ThinBasic.NET - ThinBasic Programming Language for .NET
+// Copyright (c) 2019 Jiowcl. All rights reserved.
+
+namespace ThinBasic.NET.Core
 {
     /// <summary>
     /// Enums

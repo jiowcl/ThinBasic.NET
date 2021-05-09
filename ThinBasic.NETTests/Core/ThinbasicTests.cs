@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿// ThinBasic.NET - ThinBasic Programming Language for .NET
+// Copyright (c) 2019 Jiowcl. All rights reserved.
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using System.Text;
 

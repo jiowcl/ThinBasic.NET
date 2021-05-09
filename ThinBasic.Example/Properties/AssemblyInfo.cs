@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 變更這些屬性的值即可修改組件的相關
 // 資訊。
 [assembly: AssemblyTitle("ThinBasic.Example")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("ThinBasic.NET Example")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Inwazy Technology")]
 [assembly: AssemblyProduct("ThinBasic.Example")]
