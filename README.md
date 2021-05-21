@@ -10,6 +10,7 @@
 
 - Windows 7 above (recommend)
 - ThinBasic 1.10
+- .NET Standard 2.0
 
 ## NuGet Installation
 
