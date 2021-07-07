@@ -8,9 +8,9 @@
 
 ## Environment
 
-- Windows 7 above (recommend)
-- ThinBasic 1.10
-- .NET Standard 2.1
+- Windows 7 above (recommend)  
+- ThinBasic 1.10  
+- .NET Standard 2.1  
 
 ## NuGet Installation
 
@@ -39,13 +39,12 @@ Thinbasic.Release(0);
 ## License
 
 Copyright (c) 2017-2021 Ji-Feng Tsai.  
-
-Code released under the MIT license.
+Code released under the MIT license.  
 
 ## TODO
 
-- More Functions defined in thinCore.dll
-- More examples
+- More Functions defined in thinCore.dll  
+- More examples  
 
 ## Donation
 
