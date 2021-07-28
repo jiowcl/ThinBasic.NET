@@ -5,6 +5,7 @@
 ![GitHub](https://img.shields.io/github/license/jiowcl/ThinBasic.NET.svg)
 ![Nuget](https://img.shields.io/nuget/v/ThinBasic.NET)
 ![Travis-Ci](https://travis-ci.com/jiowcl/ThinBasic.NET.svg?branch=master)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c5cd6aeb809142018010cca36f2ea46c)](https://www.codacy.com/gh/jiowcl/ThinBasic.NET/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jiowcl/ThinBasic.NET&amp;utm_campaign=Badge_Grade)
 
 ## Environment
 

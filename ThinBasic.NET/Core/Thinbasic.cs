@@ -356,9 +356,19 @@ namespace ThinBasic.NET.Core
         /// VariableGetValueNum
         /// </summary>
         /// <param name="sSearchKey"></param>
+        /// <returns>Returns int.</returns>
+        public static int VariableGetValueNum([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey)
+        {
+            return VariableGetValueNumNative(sSearchKey, 0);
+        }
+
+        /// <summary>
+        /// VariableGetValueNum
+        /// </summary>
+        /// <param name="sSearchKey"></param>
         /// <param name="lIndex"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetValueNum([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, int lIndex = 0)
+        public static int VariableGetValueNum([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, int lIndex)
         {
             return VariableGetValueNumNative(sSearchKey, lIndex);
         }
