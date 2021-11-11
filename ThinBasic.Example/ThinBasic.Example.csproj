@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net6.0-windows;net5.0-windows</TargetFrameworks>
     <StartupObject>ThinBasic.Example.Program</StartupObject>
     <Authors>Jiowcl</Authors>
     <Company>Inwazy Technology</Company>
@@ -13,6 +13,7 @@
     <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
     <PackageReleaseNotes>1.0.0</PackageReleaseNotes>
     <Platforms>AnyCPU;x86</Platforms>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

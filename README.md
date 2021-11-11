@@ -11,7 +11,7 @@
 
 - Windows 7 above (recommend)  
 - ThinBasic 1.10  
-- .NET Standard 2.1  
+- .NET 6
 
 ## NuGet Installation
 
@@ -21,7 +21,7 @@ PM> Install-Package ThinBasic.NET
 
 ## How to Build
 
-Building requires [Visual Studio 2019 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
+Building requires [Visual Studio 2022 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
 
 ## Example
 
@@ -40,6 +40,7 @@ Thinbasic.Release(0);
 ## License
 
 Copyright (c) 2017-2021 Ji-Feng Tsai.  
+ThinBasic Copyright (c) Eros Olmi [ThinBASIC Interpreter](https://github.com/ThinBASIC).  
 Code released under the MIT license.  
 
 ## TODO
