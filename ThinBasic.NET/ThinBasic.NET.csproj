@@ -8,11 +8,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
-    <PackageReleaseNotes>1.0.4</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.5</PackageReleaseNotes>
     <Authors>Jiowcl</Authors>
     <PackageProjectUrl>https://github.com/jiowcl/ThinBasic.NET</PackageProjectUrl>
     <Platforms>AnyCPU;x86</Platforms>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <PackageIcon></PackageIcon>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
