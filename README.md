@@ -10,7 +10,7 @@
 ## Environment
 
 - Windows 7 above (recommend)  
-- ThinBasic 1.1170  
+- ThinBasic 1.11.70  
 - .NET 6
 
 ## NuGet Installation
