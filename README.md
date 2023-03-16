@@ -39,7 +39,7 @@ Thinbasic.Release(0);
 
 ## License
 
-Copyright (c) 2017-2022 Ji-Feng Tsai.  
+Copyright (c) 2017-2023 Ji-Feng Tsai.  
 ThinBasic Copyright (c) Eros Olmi [ThinBASIC Interpreter](https://github.com/ThinBASIC).  
 Code released under the MIT license.  
 
