@@ -10,8 +10,8 @@
 ## Environment
 
 - Windows 7 above (recommend)  
-- ThinBasic 1.11.70  
-- .NET 7
+- ThinBasic 1.12  
+- .NET 8
 
 ## NuGet Installation
 
@@ -39,7 +39,7 @@ Thinbasic.Release(0);
 
 ## License
 
-Copyright (c) 2017-2023 Ji-Feng Tsai.  
+Copyright (c) 2017-2024 Ji-Feng Tsai.  
 ThinBasic Copyright (c) Eros Olmi [ThinBASIC Interpreter](https://github.com/ThinBASIC).  
 Code released under the MIT license.  
 

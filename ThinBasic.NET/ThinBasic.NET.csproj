@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net7.0-windows;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net7.0-windows;net6.0-windows</TargetFrameworks>
     <Company>Inwazy Technology</Company>
     <Copyright>Ji-Feng Tsai</Copyright>
     <Description>.Net Wrapper for ThinBasic Programming Language.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
-    <PackageReleaseNotes>1.0.5</PackageReleaseNotes>
+    <PackageReleaseNotes>1.0.6</PackageReleaseNotes>
     <Authors>Jiowcl</Authors>
     <PackageProjectUrl>https://github.com/jiowcl/ThinBasic.NET</PackageProjectUrl>
     <Platforms>AnyCPU;x86</Platforms>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <PackageIcon></PackageIcon>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
