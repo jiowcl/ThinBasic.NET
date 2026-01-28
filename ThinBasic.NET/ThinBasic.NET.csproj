@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net9.0-windows;net8.0-windows;net7.0-windows;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net9.0-windows;net8.0-windows</TargetFrameworks>
     <Company>Inwazy Technology</Company>
     <Copyright>Ji-Feng Tsai</Copyright>
     <Description>.Net Wrapper for ThinBasic Programming Language.</Description>
