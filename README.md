@@ -9,9 +9,9 @@
 
 ## Environment
 
-- Windows 7 above (recommend)  
+- Windows 10 above (recommend)  
 - ThinBasic 1.14  
-- .NET 9
+- .NET 10
 
 ## NuGet Installation
 
@@ -21,7 +21,7 @@ PM> Install-Package ThinBasic.NET
 
 ## How to Build
 
-Building requires [Visual Studio 2022 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
+Building requires [Visual Studio 2026 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
 
 ## Example
 
