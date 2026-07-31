@@ -18,9 +18,23 @@ namespace ThinBasic.NET.Core
         public enum VarMainType : int
         {
             IsNumber = 20,
-            IsString = 30,
             IsAsciiZ = 25,
-            IsVariant = 50
+            IsString = 30,
+            IsGuid = 40,
+            IsVariant = 50,
+            IsUdt = 60,
+            IsPtr = 70,
+            IsObject = 80,
+            IsClass = 90,
+            IsFunction = 95,
+            IsDispatch = 100
+        }
+
+        // EquateType (thinBasic_AddEquate ForceType)
+        public enum EquateType : int
+        {
+            Number = 3,
+            String = 5
         }
 
         // VarSubType

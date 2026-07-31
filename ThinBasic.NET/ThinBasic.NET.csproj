@@ -12,7 +12,7 @@
     <Authors>Jiowcl</Authors>
     <PackageProjectUrl>https://github.com/jiowcl/ThinBasic.NET</PackageProjectUrl>
     <Platforms>AnyCPU;x86</Platforms>
-    <Version>1.0.7</Version>
+    <Version>1.0.8</Version>
     <PackageIcon></PackageIcon>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
@@ -21,19 +21,18 @@
     <SignAssembly>false</SignAssembly>
     <ApplicationIcon>thinbasic.net.ico</ApplicationIcon>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <Optimize>true</Optimize>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <Optimize>true</Optimize>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 

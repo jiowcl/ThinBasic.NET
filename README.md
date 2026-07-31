@@ -11,7 +11,7 @@
 
 - Windows 10 above (recommend)  
 - ThinBasic 1.14  
-- .NET 10
+- .NET 8 / 9 / 10 (Windows x86)
 
 ## NuGet Installation
 
@@ -33,8 +33,25 @@ int bufferType = (int)Enums.BufferType.IsScript;
 int callingProgram = (int)Enums.CallingProgram.GUI;
 
 int hThinbasic = Thinbasic.Init(0, 0, "thinbasic");
+
+if (hThinbasic != 0)
+{
+    Console.WriteLine("Init failed: " + Thinbasic.GetLastError());
+
+    return;
+}
+
+// Optional: inject host constants before Run
+Thinbasic.AddEquate("%HOST_EQ", string.Empty, 7, (int)Enums.EquateType.Number);
+
 int result = Thinbasic.Run(hThinbasic, scriptBuffer, bufferType, 0, 0, 0, 0, callingProgram, 0);
-Thinbasic.Release(0);
+int lastError = Thinbasic.GetLastError();
+Thinbasic.Release(hThinbasic);
+
+if (lastError != 0)
+{
+    Console.WriteLine("Script error: " + lastError);
+}
 ```
 
 ## License
@@ -45,8 +62,9 @@ Code released under the MIT license.
 
 ## TODO
 
-- More Functions defined in thinCore.dll  
+- More thinCore.dll APIs (parser / module helpers)  
 - More examples  
+
 
 ## Donation
 
