@@ -21,7 +21,7 @@ PM> Install-Package ThinBasic.NET
 
 ## How to Build
 
-Building requires [Visual Studio 2026 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 10.
+Building requires [Visual Studio 2026 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 11.
 
 ## Example
 

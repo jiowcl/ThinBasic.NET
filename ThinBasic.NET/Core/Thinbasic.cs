@@ -11,6 +11,10 @@ namespace ThinBasic.NET.Core
     /// </summary>
     public class Thinbasic
     {
+        // thinCore.dll string parameters/returns use ANSI BSTRs (SysAllocStringByteLen),
+        // UnmanagedType.AnsiBStr is obsolete,
+        // so strings are marshalled manually via AnsiBStrMarshal.
+
         /// <summary>
         /// InitNative
         /// </summary>
@@ -18,8 +22,8 @@ namespace ThinBasic.NET.Core
         /// <param name="cInstance"></param>
         /// <param name="sKey"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_Init", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int InitNative(int hWnd, int cInstance, [MarshalAs(UnmanagedType.AnsiBStr)] string sKey);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_Init", CallingConvention = CallingConvention.StdCall)]
+        private static extern int InitNative(int hWnd, int cInstance, IntPtr sKey);
 
         /// <summary>
         /// RunNative
@@ -34,9 +38,9 @@ namespace ThinBasic.NET.Core
         /// <param name="callingProgram"></param>
         /// <param name="dependancyMode"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_Run", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_Run", CallingConvention = CallingConvention.StdCall)]
         private static extern int RunNative(int hScript,
-                                     [MarshalAs(UnmanagedType.BStr)] string sBuffer,
+                                     IntPtr sBuffer,
                                      int bufferType,
                                      int options,
                                      int debugMode,
@@ -50,7 +54,7 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="hScript"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_Release", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_Release", CallingConvention = CallingConvention.StdCall)]
         private static extern int ReleaseNative(int hScript);
 
         /// <summary>
@@ -58,8 +62,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sNewIncludeDir"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddIncludePath", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int AddIncludePathNative([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddIncludePath", CallingConvention = CallingConvention.StdCall)]
+        private static extern int AddIncludePathNative(IntPtr sNewIncludeDir);
 
         /// <summary>
         /// LoadSymbolNative
@@ -69,8 +73,8 @@ namespace ThinBasic.NET.Core
         /// <param name="aFunctionOrSubPointer"></param>
         /// <param name="rorceOverWrite"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbol", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int LoadSymbolNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbol", CallingConvention = CallingConvention.StdCall)]
+        private static extern int LoadSymbolNative(IntPtr sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite);
 
         /// <summary>
         /// LoadSymbolExNative
@@ -82,31 +86,30 @@ namespace ThinBasic.NET.Core
         /// <param name="sSyntax"></param>
         /// <param name="sHelp"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbolEX", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int LoadSymbolExNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName,
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbolEX", CallingConvention = CallingConvention.StdCall)]
+        private static extern int LoadSymbolExNative(IntPtr sSymbolName,
                                                      int returnCode,
                                                      IntPtr aFunctionOrSubPointer,
                                                      int rorceOverWrite,
-                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sSyntax,
-                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sHelp);
+                                                     IntPtr sSyntax,
+                                                     IntPtr sHelp);
 
         /// <summary>
         /// VariableExistsNative
         /// </summary>
         /// <param name="vName"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableExists", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableExistsNative([MarshalAs(UnmanagedType.AnsiBStr)] string vName);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableExists", CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableExistsNative(IntPtr vName);
 
         /// <summary>
         /// VariableGetListNative
         /// </summary>
         /// <param name="lStackLevel"></param>
         /// <param name="sSep"></param>
-        /// <returns>Returns string.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetList", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        [return: MarshalAs(UnmanagedType.AnsiBStr)]
-        private static extern string VariableGetListNative(int lStackLevel, [MarshalAs(UnmanagedType.AnsiBStr)] string sSep);
+        /// <returns>Returns IntPtr.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetList", CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr VariableGetListNative(int lStackLevel, IntPtr sSep);
 
         /// <summary>
         /// VariableGetInfoNative
@@ -116,8 +119,8 @@ namespace ThinBasic.NET.Core
         /// <param name="iSubType"></param>
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfo", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableGetInfoNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, out int iMainType, out int iSubType, out int iIsArray);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfo", CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableGetInfoNative(IntPtr sSearchKey, out int iMainType, out int iSubType, out int iIsArray);
 
         /// <summary>
         /// VariableGetInfoPtrNative
@@ -127,7 +130,7 @@ namespace ThinBasic.NET.Core
         /// <param name="iSubType"></param>
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfoPtr", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfoPtr", CallingConvention = CallingConvention.StdCall)]
         private static extern int VariableGetInfoPtrNative(int pVariable, out int iMainType, out int iSubType, out int iIsArray);
 
         /// <summary>
@@ -136,43 +139,43 @@ namespace ThinBasic.NET.Core
         /// <param name="sSearchKey"></param>
         /// <param name="lIndex"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetValueNum", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableGetValueNumNative([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, int lIndex = 0);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetValueNum", CallingConvention = CallingConvention.StdCall)]
+        private static extern int VariableGetValueNumNative(IntPtr sSearchKey, int lIndex = 0);
 
         /// <summary>
         /// FunctionExistsNative
         /// </summary>
         /// <param name="fName"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_FunctionExists", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int FunctionExistsNative([MarshalAs(UnmanagedType.AnsiBStr)] string fName);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_FunctionExists", CallingConvention = CallingConvention.StdCall)]
+        private static extern int FunctionExistsNative(IntPtr fName);
 
         /// <summary>
         /// GetLastErrorNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetLastError", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetLastError", CallingConvention = CallingConvention.StdCall)]
         private static extern int GetLastErrorNative();
 
         /// <summary>
         /// ErrorFlagNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorFlag", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorFlag", CallingConvention = CallingConvention.StdCall)]
         private static extern int ErrorFlagNative();
 
         /// <summary>
         /// ErrorFreeNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorFree", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorFree", CallingConvention = CallingConvention.StdCall)]
         private static extern int ErrorFreeNative();
 
         /// <summary>
         /// ErrorUserConfirmedNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorUserConfirmed", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ErrorUserConfirmed", CallingConvention = CallingConvention.StdCall)]
         private static extern int ErrorUserConfirmedNative();
 
         /// <summary>
@@ -181,37 +184,36 @@ namespace ThinBasic.NET.Core
         /// <param name="errorCode"></param>
         /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_RunTimeError", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        private static extern int RunTimeErrorNative(int errorCode, [MarshalAs(UnmanagedType.AnsiBStr)] string sAdditionalInfo);
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_RunTimeError", CallingConvention = CallingConvention.StdCall)]
+        private static extern int RunTimeErrorNative(int errorCode, IntPtr sAdditionalInfo);
 
         /// <summary>
         /// GetRunTimeInfoNative
         /// </summary>
         /// <param name="sInfoName"></param>
-        /// <returns>Returns string.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetRunTimeInfo", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
-        [return: MarshalAs(UnmanagedType.AnsiBStr)]
-        private static extern string GetRunTimeInfoNative([MarshalAs(UnmanagedType.AnsiBStr)] string sInfoName);
+        /// <returns>Returns IntPtr.</returns>
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetRunTimeInfo", CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr GetRunTimeInfoNative(IntPtr sInfoName);
 
         /// <summary>
         /// CheckEqualTypeMandatoryNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_CheckEqualType_Mandatory", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_CheckEqualType_Mandatory", CallingConvention = CallingConvention.StdCall)]
         private static extern int CheckEqualTypeMandatoryNative();
 
         /// <summary>
         /// DetermineTypeNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_DetermineType", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_DetermineType", CallingConvention = CallingConvention.StdCall)]
         private static extern int DetermineTypeNative();
 
         /// <summary>
         /// ScriptIsObfuscatedNative
         /// </summary>
         /// <returns>Returns int.</returns>
-        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ScriptIsObfuscated", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("thinCore.dll", EntryPoint = "thinBasic_ScriptIsObfuscated", CallingConvention = CallingConvention.StdCall)]
         private static extern int ScriptIsObfuscatedNative();
 
         /// <summary>
@@ -221,9 +223,17 @@ namespace ThinBasic.NET.Core
         /// <param name="cInstance"></param>
         /// <param name="sKey"></param>
         /// <returns>Returns int.</returns>
-        public static int Init(int hWnd, int cInstance, [MarshalAs(UnmanagedType.AnsiBStr)] string sKey)
+        public static int Init(int hWnd, int cInstance, string sKey)
         {
-            return InitNative(hWnd, cInstance, sKey);
+            IntPtr pKey = AnsiBStrMarshal.Alloc(sKey);
+            try
+            {
+                return InitNative(hWnd, cInstance, pKey);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pKey);
+            }
         }
 
         /// <summary>
@@ -240,7 +250,7 @@ namespace ThinBasic.NET.Core
         /// <param name="dependancyMode"></param>
         /// <returns>Returns int.</returns>
         public static int Run(int hScript,
-                                     [MarshalAs(UnmanagedType.BStr)] string sBuffer,
+                                     string sBuffer,
                                      int bufferType,
                                      int options,
                                      int debugMode,
@@ -249,7 +259,15 @@ namespace ThinBasic.NET.Core
                                      int callingProgram,
                                      int dependancyMode)
         {
-            return RunNative(hScript, sBuffer, bufferType, options, debugMode, logMode, obfuscateMode, callingProgram, dependancyMode);
+            IntPtr pBuffer = AnsiBStrMarshal.Alloc(sBuffer);
+            try
+            {
+                return RunNative(hScript, pBuffer, bufferType, options, debugMode, logMode, obfuscateMode, callingProgram, dependancyMode);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pBuffer);
+            }
         }
 
         /// <summary>
@@ -267,9 +285,17 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sNewIncludeDir"></param>
         /// <returns>Returns int.</returns>
-        public static int AddIncludePath([MarshalAs(UnmanagedType.AnsiBStr)] string sNewIncludeDir)
+        public static int AddIncludePath(string sNewIncludeDir)
         {
-            return AddIncludePathNative(sNewIncludeDir);
+            IntPtr pDir = AnsiBStrMarshal.Alloc(sNewIncludeDir);
+            try
+            {
+                return AddIncludePathNative(pDir);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pDir);
+            }
         }
 
         /// <summary>
@@ -280,13 +306,21 @@ namespace ThinBasic.NET.Core
         /// <param name="aFunctionOrSubPointer"></param>
         /// <param name="rorceOverWrite"></param>
         /// <returns>Returns int.</returns>
-        public static int LoadSymbol([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite)
+        public static int LoadSymbol(string sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite)
         {
-            return LoadSymbolNative(sSymbolName, returnCode, aFunctionOrSubPointer, rorceOverWrite);
+            IntPtr pName = AnsiBStrMarshal.Alloc(sSymbolName);
+            try
+            {
+                return LoadSymbolNative(pName, returnCode, aFunctionOrSubPointer, rorceOverWrite);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pName);
+            }
         }
 
         /// <summary>
-        /// LoadSymbolExNative
+        /// LoadSymbolEx
         /// </summary>
         /// <param name="sSymbolName"></param>
         /// <param name="returnCode"></param>
@@ -295,14 +329,26 @@ namespace ThinBasic.NET.Core
         /// <param name="sSyntax"></param>
         /// <param name="sHelp"></param>
         /// <returns>Returns int.</returns>
-        public static int LoadSymbolEx([MarshalAs(UnmanagedType.AnsiBStr)] string sSymbolName,
+        public static int LoadSymbolEx(string sSymbolName,
                                                      int returnCode,
                                                      IntPtr aFunctionOrSubPointer,
                                                      int rorceOverWrite,
-                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sSyntax,
-                                                     [MarshalAs(UnmanagedType.AnsiBStr)] string sHelp)
+                                                     string sSyntax,
+                                                     string sHelp)
         {
-            return LoadSymbolExNative(sSymbolName, returnCode, aFunctionOrSubPointer, rorceOverWrite, sSyntax, sHelp);
+            IntPtr pName = AnsiBStrMarshal.Alloc(sSymbolName);
+            IntPtr pSyntax = AnsiBStrMarshal.Alloc(sSyntax);
+            IntPtr pHelp = AnsiBStrMarshal.Alloc(sHelp);
+            try
+            {
+                return LoadSymbolExNative(pName, returnCode, aFunctionOrSubPointer, rorceOverWrite, pSyntax, pHelp);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pName);
+                AnsiBStrMarshal.Free(pSyntax);
+                AnsiBStrMarshal.Free(pHelp);
+            }
         }
 
         /// <summary>
@@ -310,9 +356,17 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="vName"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableExists([MarshalAs(UnmanagedType.AnsiBStr)] string vName)
+        public static int VariableExists(string vName)
         {
-            return VariableExistsNative(vName);
+            IntPtr pName = AnsiBStrMarshal.Alloc(vName);
+            try
+            {
+                return VariableExistsNative(pName);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pName);
+            }
         }
 
         /// <summary>
@@ -321,9 +375,17 @@ namespace ThinBasic.NET.Core
         /// <param name="lStackLevel"></param>
         /// <param name="sSep"></param>
         /// <returns>Returns string.</returns>
-        public static string VariableGetList(int lStackLevel, [MarshalAs(UnmanagedType.AnsiBStr)] string sSep)
+        public static string VariableGetList(int lStackLevel, string sSep)
         {
-            return VariableGetListNative(lStackLevel, sSep);
+            IntPtr pSep = AnsiBStrMarshal.Alloc(sSep);
+            try
+            {
+                return AnsiBStrMarshal.PtrToStringAndFree(VariableGetListNative(lStackLevel, pSep));
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pSep);
+            }
         }
 
         /// <summary>
@@ -334,9 +396,17 @@ namespace ThinBasic.NET.Core
         /// <param name="iSubType"></param>
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetInfo([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, out int iMainType, out int iSubType, out int iIsArray)
+        public static int VariableGetInfo(string sSearchKey, out int iMainType, out int iSubType, out int iIsArray)
         {
-            return VariableGetInfoNative(sSearchKey, out iMainType, out iSubType, out iIsArray);
+            IntPtr pKey = AnsiBStrMarshal.Alloc(sSearchKey);
+            try
+            {
+                return VariableGetInfoNative(pKey, out iMainType, out iSubType, out iIsArray);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pKey);
+            }
         }
 
         /// <summary>
@@ -357,9 +427,9 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sSearchKey"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetValueNum([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey)
+        public static int VariableGetValueNum(string sSearchKey)
         {
-            return VariableGetValueNumNative(sSearchKey, 0);
+            return VariableGetValueNum(sSearchKey, 0);
         }
 
         /// <summary>
@@ -368,9 +438,17 @@ namespace ThinBasic.NET.Core
         /// <param name="sSearchKey"></param>
         /// <param name="lIndex"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetValueNum([MarshalAs(UnmanagedType.AnsiBStr)] string sSearchKey, int lIndex)
+        public static int VariableGetValueNum(string sSearchKey, int lIndex)
         {
-            return VariableGetValueNumNative(sSearchKey, lIndex);
+            IntPtr pKey = AnsiBStrMarshal.Alloc(sSearchKey);
+            try
+            {
+                return VariableGetValueNumNative(pKey, lIndex);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pKey);
+            }
         }
 
         /// <summary>
@@ -378,9 +456,17 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="fName"></param>
         /// <returns>Returns int.</returns>
-        public static int FunctionExists([MarshalAs(UnmanagedType.AnsiBStr)] string fName)
+        public static int FunctionExists(string fName)
         {
-            return FunctionExistsNative(fName);
+            IntPtr pName = AnsiBStrMarshal.Alloc(fName);
+            try
+            {
+                return FunctionExistsNative(pName);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pName);
+            }
         }
 
         /// <summary>
@@ -425,9 +511,17 @@ namespace ThinBasic.NET.Core
         /// <param name="errorCode"></param>
         /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
-        public static int RunTimeError(int errorCode, [MarshalAs(UnmanagedType.AnsiBStr)] string sAdditionalInfo)
+        public static int RunTimeError(int errorCode, string sAdditionalInfo)
         {
-            return RunTimeErrorNative(errorCode, sAdditionalInfo);
+            IntPtr pInfo = AnsiBStrMarshal.Alloc(sAdditionalInfo);
+            try
+            {
+                return RunTimeErrorNative(errorCode, pInfo);
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pInfo);
+            }
         }
 
         /// <summary>
@@ -435,10 +529,17 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sInfoName"></param>
         /// <returns>Returns string.</returns>
-        [return: MarshalAs(UnmanagedType.AnsiBStr)]
-        public static string GetRunTimeInfo([MarshalAs(UnmanagedType.AnsiBStr)] string sInfoName)
+        public static string GetRunTimeInfo(string sInfoName)
         {
-            return GetRunTimeInfoNative(sInfoName);
+            IntPtr pName = AnsiBStrMarshal.Alloc(sInfoName);
+            try
+            {
+                return AnsiBStrMarshal.PtrToStringAndFree(GetRunTimeInfoNative(pName));
+            }
+            finally
+            {
+                AnsiBStrMarshal.Free(pName);
+            }
         }
 
         /// <summary>
