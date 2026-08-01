@@ -33,6 +33,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Sample\test_embed.tbasic">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Sample\test_date.tbasic">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

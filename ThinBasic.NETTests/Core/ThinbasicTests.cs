@@ -157,6 +157,62 @@ namespace ThinBasic.NET.Core.Tests
         }
 
         [TestMethod]
+        public void ArrayApi_InspectAndUpdateElements()
+        {
+            int hThin = Thinbasic.Init(0, 0, "thinbasic");
+            Assert.AreEqual(0, hThin);
+
+            string script =
+                "DIM a(3) AS EXT\r\n" +
+                "a(1) = 10\r\n" +
+                "a(2) = 20\r\n" +
+                "a(3) = 30\r\n" +
+                "DIM s(2) AS STRING\r\n" +
+                "s(1) = \"a\"\r\n" +
+                "s(2) = \"b\"\r\n" +
+                "FUNCTION GetS1() AS STRING\r\n" +
+                "  FUNCTION = s(1)\r\n" +
+                "END FUNCTION\r\n";
+
+            int run = Thinbasic.Run(
+                hThin,
+                script,
+                (int)Enums.BufferType.IsScript,
+                0, 0, 0, 0,
+                (int)Enums.CallingProgram.Console,
+                0);
+
+            Assert.AreEqual(0, run);
+            Assert.AreEqual(0, Thinbasic.GetLastError());
+            Assert.AreNotEqual(0, Thinbasic.VariableIsArray("a"));
+            Assert.AreEqual(3, Thinbasic.ArrayGetElements("a"));
+            Assert.AreNotEqual(0, Thinbasic.ArrayGetPtr("a"));
+            Assert.AreEqual(10.0, Thinbasic.VariableGetValueNum("a", 1), 0.0001);
+            Assert.AreEqual(20.0, Thinbasic.VariableGetValueNum("a", 2), 0.0001);
+
+            int mainType, subType, isArray, dataPtr, nElements;
+            int varPtr = Thinbasic.VariableGetInfoEx("a", out mainType, out subType, out isArray, out dataPtr, out nElements);
+            Assert.AreNotEqual(0, varPtr);
+            Assert.AreEqual(3, nElements);
+            Assert.AreEqual(20.0, Thinbasic.GetVariableNumberDirect(varPtr, 2), 0.0001);
+            Assert.AreEqual(0, Thinbasic.ChangeVariableNumberDirect(varPtr, 2, 99.5));
+            Assert.AreEqual(99.5, Thinbasic.VariableGetValueNum("a", 2), 0.0001);
+
+            int sPtr = Thinbasic.VariableGetInfoEx("s", out mainType, out subType, out isArray, out dataPtr, out nElements);
+            Assert.AreEqual(0, Thinbasic.ChangeVariableStringDirect(sPtr, 1, "xyz"));
+
+            double num;
+            string str;
+            Assert.AreEqual(0, Thinbasic.FunctionSimpleCall("GetS1", out num, out str));
+            Assert.AreEqual("xyz", str);
+
+            Assert.AreEqual(0, Thinbasic.VariableRedim(varPtr, Enums.True, 5, 0, 0));
+            Assert.AreEqual(5, Thinbasic.ArrayGetElements("a"));
+
+            Thinbasic.Release(hThin);
+        }
+
+        [TestMethod]
         public void ParserApi_HostKeywords_ParseNumberAndStringArgs()
         {
             ThinBasicNumberCallback hostAdd = () =>

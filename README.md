@@ -76,6 +76,15 @@ Thinbasic.LoadSymbol("HostAdd", () =>
 }, Enums.ForceOverWrite);
 ```
 
+## Examples  
+
+```powershell
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- embed
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- host
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- parser
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- array
+```
+
 ## License
 
 Copyright (c) 2017-2026 Ji-Feng Tsai.  
@@ -84,8 +93,7 @@ Code released under the MIT license.
 
 ## TODO
 
-- More thinCore.dll APIs (arrays / class / hash)  
-- More examples  
+- More thinCore.dll APIs (class / hash / isolation)  
 
 
 ## Donation

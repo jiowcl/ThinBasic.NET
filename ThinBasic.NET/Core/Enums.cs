@@ -43,6 +43,21 @@ namespace ThinBasic.NET.Core
             String = 5
         }
 
+        // ArrayGetInfo InfoType
+        public enum ArrayInfoType : int
+        {
+            ElementsCount = 1,
+            ElementSize = 2,
+            Dimensions = 3,
+            Size = 4,
+            ElementsType = 10,
+            ElementsAreFixed = 15,
+            PtrToData = 30,
+            UBoundDim1 = 91,
+            UBoundDim2 = 92,
+            UBoundDim3 = 93
+        }
+
         // VarSubType
         public enum VarSubType : int
         {

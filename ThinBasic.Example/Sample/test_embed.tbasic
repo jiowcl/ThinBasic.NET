@@ -1,0 +1,3 @@
+' ThinBasic.NET embed sample
+DIM n AS LONG
+n = 21 * 2
