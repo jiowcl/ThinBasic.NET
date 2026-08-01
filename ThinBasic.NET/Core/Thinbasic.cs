@@ -13,7 +13,7 @@ namespace ThinBasic.NET.Core
     /// thinCore.dll string parameters/returns use ANSI BSTRs (SysAllocStringByteLen).
     /// Numeric EXT values use Ext80 by-value; EXT function returns are read as double (ST0).
     /// </remarks>
-    public class Thinbasic
+    public partial class Thinbasic
     {
         /// <summary>
         /// Init

@@ -14,6 +14,12 @@ namespace ThinBasic.NET.Core
         // ForceOverWrite
         public const int ForceOverWrite = 1;
 
+        // thinBasic %FALSE / %TRUE (parser HideError / AutoPutBack flags)
+        public const int False = 0;
+
+        // thinBasic %TRUE (parser HideError / AutoPutBack flags)
+        public const int True = 1;
+
         // VarMainType
         public enum VarMainType : int
         {

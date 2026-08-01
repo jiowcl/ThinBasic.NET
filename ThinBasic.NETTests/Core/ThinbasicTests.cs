@@ -157,6 +157,87 @@ namespace ThinBasic.NET.Core.Tests
         }
 
         [TestMethod]
+        public void ParserApi_HostKeywords_ParseNumberAndStringArgs()
+        {
+            ThinBasicNumberCallback hostAdd = () =>
+            {
+                if (Thinbasic.CheckOpenParensMandatory() == 0)
+                {
+                    return 0;
+                }
+
+                Thinbasic.ParseNumber(out double a);
+                if (Thinbasic.CheckCommaMandatory() == 0)
+                {
+                    return 0;
+                }
+
+                Thinbasic.ParseNumber(out double b);
+                if (Thinbasic.CheckCloseParensMandatory() == 0)
+                {
+                    return 0;
+                }
+
+                return a + b;
+            };
+
+            ThinBasicStringCallback hostJoin = () =>
+            {
+                if (Thinbasic.CheckOpenParensMandatory() == 0)
+                {
+                    return Thinbasic.AllocReturnString(string.Empty);
+                }
+
+                Thinbasic.ParseString(out string a);
+                if (Thinbasic.CheckCommaMandatory() == 0)
+                {
+                    return Thinbasic.AllocReturnString(string.Empty);
+                }
+
+                Thinbasic.ParseString(out string b);
+                if (Thinbasic.CheckCloseParensMandatory() == 0)
+                {
+                    return Thinbasic.AllocReturnString(string.Empty);
+                }
+
+                return Thinbasic.AllocReturnString(a + b);
+            };
+
+            int hThin = Thinbasic.Init(0, 0, "thinbasic");
+            Assert.AreEqual(0, hThin);
+            Assert.IsTrue(Thinbasic.LoadSymbol("HostAdd", hostAdd, Enums.ForceOverWrite) > 0);
+            Assert.IsTrue(Thinbasic.LoadSymbol("HostJoin$", hostJoin, Enums.ForceOverWrite) > 0);
+
+            string script =
+                "DIM n AS EXT\r\n" +
+                "DIM s AS STRING\r\n" +
+                "n = HostAdd(10, 32.5)\r\n" +
+                "s = HostJoin$(\"hel\", \"lo\")\r\n" +
+                "FUNCTION GetS() AS STRING\r\n" +
+                "  FUNCTION = s\r\n" +
+                "END FUNCTION\r\n";
+
+            int run = Thinbasic.Run(
+                hThin,
+                script,
+                (int)Enums.BufferType.IsScript,
+                0, 0, 0, 0,
+                (int)Enums.CallingProgram.Console,
+                0);
+
+            Assert.AreEqual(0, run);
+            Assert.AreEqual(0, Thinbasic.GetLastError());
+            Assert.AreEqual(42.5, Thinbasic.VariableGetValueNum("n"), 0.0001);
+
+            double num;
+            string str;
+            Assert.AreEqual(0, Thinbasic.FunctionSimpleCall("GetS", out num, out str));
+            Assert.AreEqual("hello", str);
+
+            Thinbasic.Release(hThin);
+        }
+
+        [TestMethod]
         public void LoadSymbol_NullFunctionPointer_DoesNotThrow()
         {
             int hThin = Thinbasic.Init(0, 0, "thinbasic");

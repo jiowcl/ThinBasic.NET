@@ -62,6 +62,20 @@ if (lastError != 0)
 
 `LoadSymbol` / `LoadSymbolEx` accept managed delegates (`ThinBasicSubCallback`, `ThinBasicNumberCallback`, `ThinBasicStringCallback`, or any `Delegate`). Callbacks are kept rooted until `ClearSymbolCallbacks()`.
 
+Inside a keyword callback, use parser helpers to read script arguments:
+
+```csharp
+Thinbasic.LoadSymbol("HostAdd", () =>
+{
+    if (Thinbasic.CheckOpenParensMandatory() == 0) return 0;
+    Thinbasic.ParseNumber(out double a);
+    if (Thinbasic.CheckCommaMandatory() == 0) return 0;
+    Thinbasic.ParseNumber(out double b);
+    if (Thinbasic.CheckCloseParensMandatory() == 0) return 0;
+    return a + b;
+}, Enums.ForceOverWrite);
+```
+
 ## License
 
 Copyright (c) 2017-2026 Ji-Feng Tsai.  
@@ -70,7 +84,7 @@ Code released under the MIT license.
 
 ## TODO
 
-- More thinCore.dll APIs (parser / module helpers)  
+- More thinCore.dll APIs (arrays / class / hash)  
 - More examples  
 
 
