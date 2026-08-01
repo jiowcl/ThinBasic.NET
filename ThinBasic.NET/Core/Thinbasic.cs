@@ -23,7 +23,10 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Init", CallingConvention = CallingConvention.StdCall)]
-        private static extern int InitNative(int hWnd, int cInstance, IntPtr sKey);
+        private static extern int InitNative(
+            int hWnd, 
+            int cInstance, 
+            IntPtr sKey);
 
         /// <summary>
         /// Run
@@ -39,15 +42,16 @@ namespace ThinBasic.NET.Core
         /// <param name="dependancyMode"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Run", CallingConvention = CallingConvention.StdCall)]
-        private static extern int RunNative(int hScript,
-                                     IntPtr sBuffer,
-                                     int bufferType,
-                                     int options,
-                                     int debugMode,
-                                     int logMode,
-                                     int obfuscateMode,
-                                     int callingProgram,
-                                     int dependancyMode);
+        private static extern int RunNative(
+            int hScript,
+            IntPtr sBuffer,
+            int bufferType,
+            int options,
+            int debugMode,
+            int logMode,
+            int obfuscateMode,
+            int callingProgram,
+            int dependancyMode);
 
         /// <summary>
         /// Release
@@ -55,7 +59,8 @@ namespace ThinBasic.NET.Core
         /// <param name="hScript"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Release", CallingConvention = CallingConvention.StdCall)]
-        private static extern int ReleaseNative(int hScript);
+        private static extern int ReleaseNative(
+            int hScript);
 
         /// <summary>
         /// AddIncludePath
@@ -63,7 +68,8 @@ namespace ThinBasic.NET.Core
         /// <param name="sNewIncludeDir"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddIncludePath", CallingConvention = CallingConvention.StdCall)]
-        private static extern int AddIncludePathNative(IntPtr sNewIncludeDir);
+        private static extern int AddIncludePathNative(
+            IntPtr sNewIncludeDir);
 
         /// <summary>
         /// LoadSymbol
@@ -74,7 +80,11 @@ namespace ThinBasic.NET.Core
         /// <param name="rorceOverWrite"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbol", CallingConvention = CallingConvention.StdCall)]
-        private static extern int LoadSymbolNative(IntPtr sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite);
+        private static extern int LoadSymbolNative(
+            IntPtr sSymbolName, 
+            int returnCode, 
+            IntPtr aFunctionOrSubPointer, 
+            int rorceOverWrite);
 
         /// <summary>
         /// LoadSymbolEX
@@ -87,12 +97,13 @@ namespace ThinBasic.NET.Core
         /// <param name="sHelp"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_LoadSymbolEX", CallingConvention = CallingConvention.StdCall)]
-        private static extern int LoadSymbolExNative(IntPtr sSymbolName,
-                                                     int returnCode,
-                                                     IntPtr aFunctionOrSubPointer,
-                                                     int rorceOverWrite,
-                                                     IntPtr sSyntax,
-                                                     IntPtr sHelp);
+        private static extern int LoadSymbolExNative(
+            IntPtr sSymbolName,
+            int returnCode,
+            IntPtr aFunctionOrSubPointer,
+            int rorceOverWrite,
+            IntPtr sSyntax,
+            IntPtr sHelp);
 
         /// <summary>
         /// AddEquate
@@ -103,7 +114,11 @@ namespace ThinBasic.NET.Core
         /// <param name="forceType"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddEquate", CallingConvention = CallingConvention.StdCall)]
-        private static extern int AddEquateNative(IntPtr vName, IntPtr lValString, Ext80 lValNumber, int forceType);
+        private static extern int AddEquateNative(
+            IntPtr vName, 
+            IntPtr lValString, 
+            Ext80 lValNumber, 
+            int forceType);
 
         /// <summary>
         /// AddVariable
@@ -119,15 +134,16 @@ namespace ThinBasic.NET.Core
         /// <param name="reserved4"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_AddVariable", CallingConvention = CallingConvention.StdCall)]
-        private static extern int AddVariableNative(IntPtr vName,
-                                                    IntPtr lValString,
-                                                    Ext80 lValNumber,
-                                                    int forceType,
-                                                    int varMemPtr,
-                                                    int reserved1,
-                                                    int reserved2,
-                                                    int reserved3,
-                                                    int reserved4);
+        private static extern int AddVariableNative(
+            IntPtr vName,
+            IntPtr lValString,
+            Ext80 lValNumber,
+            int forceType,
+            int varMemPtr,
+            int reserved1,
+            int reserved2,
+            int reserved3,
+            int reserved4);
 
         /// <summary>
         /// ChangeVariableNumber
@@ -136,7 +152,9 @@ namespace ThinBasic.NET.Core
         /// <param name="lValNumber"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_ChangeVariableNumber", CallingConvention = CallingConvention.StdCall)]
-        private static extern int ChangeVariableNumberNative(IntPtr vName, Ext80 lValNumber);
+        private static extern int ChangeVariableNumberNative(
+            IntPtr vName, 
+            Ext80 lValNumber);
 
         /// <summary>
         /// ChangeVariableString
@@ -145,7 +163,9 @@ namespace ThinBasic.NET.Core
         /// <param name="lValString"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_ChangeVariableString", CallingConvention = CallingConvention.StdCall)]
-        private static extern int ChangeVariableStringNative(IntPtr vName, IntPtr lValString);
+        private static extern int ChangeVariableStringNative(
+            IntPtr vName, 
+            IntPtr lValString);
 
         /// <summary>
         /// VariableExists
@@ -153,7 +173,8 @@ namespace ThinBasic.NET.Core
         /// <param name="vName"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableExists", CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableExistsNative(IntPtr vName);
+        private static extern int VariableExistsNative(
+            IntPtr vName);
 
         /// <summary>
         /// VariableGetList
@@ -162,7 +183,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sSep"></param>
         /// <returns>Returns IntPtr.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetList", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr VariableGetListNative(int lStackLevel, IntPtr sSep);
+        private static extern IntPtr VariableGetListNative(
+            int lStackLevel, 
+            IntPtr sSep);
 
         /// <summary>
         /// VariableGetInfo
@@ -173,7 +196,11 @@ namespace ThinBasic.NET.Core
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfo", CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableGetInfoNative(IntPtr sSearchKey, out int iMainType, out int iSubType, out int iIsArray);
+        private static extern int VariableGetInfoNative(
+            IntPtr sSearchKey, 
+            out int iMainType, 
+            out int iSubType, 
+            out int iIsArray);
 
         /// <summary>
         /// VariableGetInfoEx
@@ -187,13 +214,14 @@ namespace ThinBasic.NET.Core
         /// <param name="whichLevel"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfoEX", CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableGetInfoExNative(IntPtr sSearchKey,
-                                                          out int iMainType,
-                                                          out int iSubType,
-                                                          out int iIsArray,
-                                                          out int iDataPtr,
-                                                          out int nElements,
-                                                          int whichLevel);
+        private static extern int VariableGetInfoExNative(
+            IntPtr sSearchKey,
+            out int iMainType,
+            out int iSubType,
+            out int iIsArray,
+            out int iDataPtr,
+            out int nElements,
+            int whichLevel);
 
         /// <summary>
         /// VariableGetInfoPtr
@@ -204,7 +232,11 @@ namespace ThinBasic.NET.Core
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetInfoPtr", CallingConvention = CallingConvention.StdCall)]
-        private static extern int VariableGetInfoPtrNative(int pVariable, out int iMainType, out int iSubType, out int iIsArray);
+        private static extern int VariableGetInfoPtrNative(
+            int pVariable, 
+            out int iMainType, 
+            out int iSubType, 
+            out int iIsArray);
 
         /// <summary>
         /// VariableGetValueNum
@@ -213,7 +245,9 @@ namespace ThinBasic.NET.Core
         /// <param name="lIndex"></param>
         /// <returns>Returns double.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_VariableGetValueNum", CallingConvention = CallingConvention.StdCall)]
-        private static extern double VariableGetValueNumNative(IntPtr sSearchKey, int lIndex);
+        private static extern double VariableGetValueNumNative(
+            IntPtr sSearchKey, 
+            int lIndex);
 
         /// <summary>
         /// FunctionExists
@@ -221,7 +255,8 @@ namespace ThinBasic.NET.Core
         /// <param name="fName"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_FunctionExists", CallingConvention = CallingConvention.StdCall)]
-        private static extern int FunctionExistsNative(IntPtr fName);
+        private static extern int FunctionExistsNative(
+            IntPtr fName);
 
         /// <summary>
         /// FunctionSimpleCall
@@ -231,7 +266,10 @@ namespace ThinBasic.NET.Core
         /// <param name="ptrStr"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_FunctionSimpleCall", CallingConvention = CallingConvention.StdCall)]
-        private static extern int FunctionSimpleCallNative(IntPtr functionName, IntPtr ptrExt, IntPtr ptrStr);
+        private static extern int FunctionSimpleCallNative(
+            IntPtr functionName, 
+            IntPtr ptrExt, 
+            IntPtr ptrStr);
 
         /// <summary>
         /// GetLastError
@@ -268,7 +306,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_RunTimeError", CallingConvention = CallingConvention.StdCall)]
-        private static extern int RunTimeErrorNative(int errorCode, IntPtr sAdditionalInfo);
+        private static extern int RunTimeErrorNative(
+            int errorCode, 
+            IntPtr sAdditionalInfo);
 
         /// <summary>
         /// GetRunTimeInfo
@@ -276,7 +316,8 @@ namespace ThinBasic.NET.Core
         /// <param name="sInfoName"></param>
         /// <returns>Returns IntPtr.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_GetRunTimeInfo", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr GetRunTimeInfoNative(IntPtr sInfoName);
+        private static extern IntPtr GetRunTimeInfoNative(
+            IntPtr sInfoName);
 
         /// <summary>
         /// CheckEqualTypeMandatory
@@ -306,7 +347,10 @@ namespace ThinBasic.NET.Core
         /// <param name="cInstance"></param>
         /// <param name="sKey"></param>
         /// <returns>Returns int.</returns>
-        public static int Init(int hWnd, int cInstance, string sKey)
+        public static int Init(
+            int hWnd, 
+            int cInstance, 
+            string sKey)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(sKey);
 
@@ -333,15 +377,16 @@ namespace ThinBasic.NET.Core
         /// <param name="callingProgram"></param>
         /// <param name="dependancyMode"></param>
         /// <returns>Returns int.</returns>
-        public static int Run(int hScript,
-                                     string sBuffer,
-                                     int bufferType,
-                                     int options,
-                                     int debugMode,
-                                     int logMode,
-                                     int obfuscateMode,
-                                     int callingProgram,
-                                     int dependancyMode)
+        public static int Run(
+            int hScript,
+            string sBuffer,
+            int bufferType,
+            int options,
+            int debugMode,
+            int logMode,
+            int obfuscateMode,
+            int callingProgram,
+            int dependancyMode)
         {
             IntPtr pBuffer = AnsiBStrMarshal.Alloc(sBuffer);
 
@@ -360,7 +405,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="hScript"></param>
         /// <returns>Returns int.</returns>
-        public static int Release(int hScript)
+        public static int Release(
+            int hScript)
         {
             return ReleaseNative(hScript);
         }
@@ -370,7 +416,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sNewIncludeDir"></param>
         /// <returns>Returns int.</returns>
-        public static int AddIncludePath(string sNewIncludeDir)
+        public static int AddIncludePath(
+            string sNewIncludeDir)
         {
             IntPtr pDir = AnsiBStrMarshal.Alloc(sNewIncludeDir);
 
@@ -392,7 +439,11 @@ namespace ThinBasic.NET.Core
         /// <param name="aFunctionOrSubPointer"></param>
         /// <param name="rorceOverWrite"></param>
         /// <returns>Returns int.</returns>
-        public static int LoadSymbol(string sSymbolName, int returnCode, IntPtr aFunctionOrSubPointer, int rorceOverWrite)
+        public static int LoadSymbol(
+            string sSymbolName, 
+            int returnCode, 
+            IntPtr aFunctionOrSubPointer, 
+            int rorceOverWrite)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(sSymbolName);
 
@@ -407,6 +458,71 @@ namespace ThinBasic.NET.Core
         }
 
         /// <summary>
+        /// Register a managed callback as a thinBasic keyword. The delegate is kept rooted until
+        /// <see cref="ClearSymbolCallbacks"/> is called.
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="returnCode"></param>
+        /// <param name="callback"></param>
+        /// <param name="forceOverWrite"></param>
+        /// <returns>Returns int.</returns>
+        public static int LoadSymbol(
+            string sSymbolName, 
+            int returnCode, 
+            Delegate callback, 
+            int forceOverWrite)
+        {
+            IntPtr ptr = SymbolCallbackTable.Add(callback);
+
+            return LoadSymbol(sSymbolName, returnCode, ptr, forceOverWrite);
+        }
+
+        /// <summary>
+        /// Register a SUB / ReturnNone keyword callback.
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="callback"></param>
+        /// <param name="forceOverWrite"></param>
+        /// <returns>Returns int.</returns>
+        public static int LoadSymbol(
+            string sSymbolName, 
+            ThinBasicSubCallback callback, 
+            int forceOverWrite = 0)
+        {
+            return LoadSymbol(sSymbolName, (int)Enums.ReturnType.None, callback, forceOverWrite);
+        }
+
+        /// <summary>
+        /// Register a numeric ReturnNumber keyword callback.
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="callback"></param>
+        /// <param name="forceOverWrite"></param>
+        /// <returns>Returns int.</returns>
+        public static int LoadSymbol(
+            string sSymbolName, 
+            ThinBasicNumberCallback callback, 
+            int forceOverWrite = 0)
+        {
+            return LoadSymbol(sSymbolName, (int)Enums.ReturnType.Number, callback, forceOverWrite);
+        }
+
+        /// <summary>
+        /// Register a string ReturnString keyword callback.
+        /// </summary>
+        /// <param name="sSymbolName"></param>
+        /// <param name="callback"></param>
+        /// <param name="forceOverWrite"></param>
+        /// <returns>Returns int.</returns>
+        public static int LoadSymbol(
+            string sSymbolName, 
+            ThinBasicStringCallback callback, 
+            int forceOverWrite = 0)
+        {
+            return LoadSymbol(sSymbolName, (int)Enums.ReturnType.String, callback, forceOverWrite);
+        }
+
+        /// <summary>
         /// LoadSymbolEx
         /// </summary>
         /// <param name="sSymbolName"></param>
@@ -416,12 +532,13 @@ namespace ThinBasic.NET.Core
         /// <param name="sSyntax"></param>
         /// <param name="sHelp"></param>
         /// <returns>Returns int.</returns>
-        public static int LoadSymbolEx(string sSymbolName,
-                                                     int returnCode,
-                                                     IntPtr aFunctionOrSubPointer,
-                                                     int rorceOverWrite,
-                                                     string sSyntax,
-                                                     string sHelp)
+        public static int LoadSymbolEx(
+            string sSymbolName,
+            int returnCode,
+            IntPtr aFunctionOrSubPointer,
+            int rorceOverWrite,
+            string sSyntax,
+            string sHelp)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(sSymbolName);
             IntPtr pSyntax = AnsiBStrMarshal.Alloc(sSyntax);
@@ -440,6 +557,39 @@ namespace ThinBasic.NET.Core
         }
 
         /// <summary>
+        /// Register a managed callback as a thinBasic keyword with syntax/help metadata.
+        /// </summary>
+        public static int LoadSymbolEx(
+            string sSymbolName,
+            int returnCode,
+            Delegate callback,
+            int forceOverWrite,
+            string sSyntax,
+            string sHelp)
+        {
+            IntPtr ptr = SymbolCallbackTable.Add(callback);
+
+            return LoadSymbolEx(sSymbolName, returnCode, ptr, forceOverWrite, sSyntax, sHelp);
+        }
+
+        /// <summary>
+        /// Allocate an ANSI BSTR for a <see cref="ThinBasicStringCallback"/> return value.
+        /// Ownership is transferred to thinCore; do not free the pointer.
+        /// </summary>
+        public static IntPtr AllocReturnString(string value)
+        {
+            return AnsiBStrMarshal.Alloc(value);
+        }
+
+        /// <summary>
+        /// Drop rooted managed symbol callbacks. Call only when no script may still invoke them.
+        /// </summary>
+        public static void ClearSymbolCallbacks()
+        {
+            SymbolCallbackTable.Clear();
+        }
+
+        /// <summary>
         /// Add a numeric or string equate (constant). Prefer names starting with % or $.
         /// Call after <see cref="Init"/> and before <see cref="Run"/>.
         /// </summary>
@@ -448,7 +598,11 @@ namespace ThinBasic.NET.Core
         /// <param name="lValNumber"></param>
         /// <param name="forceType"></param>
         /// <returns>Returns int.</returns>
-        public static int AddEquate(string vName, string lValString, double lValNumber, int forceType = 0)
+        public static int AddEquate(
+            string vName, 
+            string lValString, 
+            double lValNumber, 
+            int forceType = 0)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(vName);
             IntPtr pString = AnsiBStrMarshal.Alloc(lValString ?? string.Empty);
@@ -473,7 +627,11 @@ namespace ThinBasic.NET.Core
         /// <param name="lValNumber"></param>
         /// <param name="forceType"></param>
         /// <returns>Returns int.</returns>
-        public static int AddVariable(string vName, string lValString, double lValNumber, int forceType)
+        public static int AddVariable(
+            string vName, 
+            string lValString, 
+            double lValNumber, 
+            int forceType)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(vName);
             IntPtr pString = AnsiBStrMarshal.Alloc(lValString ?? string.Empty);
@@ -495,7 +653,9 @@ namespace ThinBasic.NET.Core
         /// <param name="vName"></param>
         /// <param name="lValNumber"></param>
         /// <returns>Returns int.</returns>
-        public static int ChangeVariableNumber(string vName, double lValNumber)
+        public static int ChangeVariableNumber(
+            string vName, 
+            double lValNumber)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(vName);
 
@@ -515,7 +675,9 @@ namespace ThinBasic.NET.Core
         /// <param name="vName"></param>
         /// <param name="lValString"></param>
         /// <returns>Returns int.</returns>
-        public static int ChangeVariableString(string vName, string lValString)
+        public static int ChangeVariableString(
+            string vName, 
+            string lValString)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(vName);
             IntPtr pValue = AnsiBStrMarshal.Alloc(lValString);
@@ -536,7 +698,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="vName"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableExists(string vName)
+        public static int VariableExists(
+            string vName)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(vName);
 
@@ -556,7 +719,9 @@ namespace ThinBasic.NET.Core
         /// <param name="lStackLevel"></param>
         /// <param name="sSep"></param>
         /// <returns>Returns string.</returns>
-        public static string VariableGetList(int lStackLevel, string sSep)
+        public static string VariableGetList(
+            int lStackLevel, 
+            string sSep)
         {
             IntPtr pSep = AnsiBStrMarshal.Alloc(sSep);
 
@@ -578,7 +743,11 @@ namespace ThinBasic.NET.Core
         /// <param name="iSubType"></param>
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetInfo(string sSearchKey, out int iMainType, out int iSubType, out int iIsArray)
+        public static int VariableGetInfo(
+            string sSearchKey, 
+            out int iMainType, 
+            out int iSubType, 
+            out int iIsArray)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(sSearchKey);
 
@@ -603,13 +772,14 @@ namespace ThinBasic.NET.Core
         /// <param name="nElements"></param>
         /// <param name="whichLevel"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetInfoEx(string sSearchKey,
-                                            out int iMainType,
-                                            out int iSubType,
-                                            out int iIsArray,
-                                            out int iDataPtr,
-                                            out int nElements,
-                                            int whichLevel = 0)
+        public static int VariableGetInfoEx(
+            string sSearchKey,
+            out int iMainType,
+            out int iSubType,
+            out int iIsArray,
+            out int iDataPtr,
+            out int nElements,
+            int whichLevel = 0)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(sSearchKey);
 
@@ -631,7 +801,11 @@ namespace ThinBasic.NET.Core
         /// <param name="iSubType"></param>
         /// <param name="iIsArray"></param>
         /// <returns>Returns int.</returns>
-        public static int VariableGetInfoPtr(int pVariable, out int iMainType, out int iSubType, out int iIsArray)
+        public static int VariableGetInfoPtr(
+            int pVariable, 
+            out int iMainType, 
+            out int iSubType, 
+            out int iIsArray)
         {
             return VariableGetInfoPtrNative(pVariable, out iMainType, out iSubType, out iIsArray);
         }
@@ -641,7 +815,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sSearchKey"></param>
         /// <returns>Returns double.</returns>
-        public static double VariableGetValueNum(string sSearchKey)
+        public static double VariableGetValueNum(
+            string sSearchKey)
         {
             return VariableGetValueNum(sSearchKey, 0);
         }
@@ -652,9 +827,12 @@ namespace ThinBasic.NET.Core
         /// <param name="sSearchKey"></param>
         /// <param name="lIndex"></param>
         /// <returns>Returns double.</returns>
-        public static double VariableGetValueNum(string sSearchKey, int lIndex)
+        public static double VariableGetValueNum(
+            string sSearchKey, 
+            int lIndex)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(sSearchKey);
+
             try
             {
                 return VariableGetValueNumNative(pKey, lIndex);
@@ -670,7 +848,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="fName"></param>
         /// <returns>Returns int.</returns>
-        public static int FunctionExists(string fName)
+        public static int FunctionExists(
+            string fName)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(fName);
 
@@ -689,7 +868,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="functionName"></param>
         /// <returns>Returns int.</returns>
-        public static int FunctionSimpleCall(string functionName)
+        public static int FunctionSimpleCall(
+            string functionName)
         {
             return FunctionSimpleCall(functionName, out _, out _);
         }
@@ -701,7 +881,10 @@ namespace ThinBasic.NET.Core
         /// <param name="numericResult"></param>
         /// <param name="stringResult"></param>
         /// <returns>Returns int.</returns>
-        public static int FunctionSimpleCall(string functionName, out double numericResult, out string stringResult)
+        public static int FunctionSimpleCall(
+            string functionName, 
+            out double numericResult, 
+            out string stringResult)
         {
             numericResult = 0;
             stringResult = null;
@@ -775,7 +958,9 @@ namespace ThinBasic.NET.Core
         /// <param name="errorCode"></param>
         /// <param name="sAdditionalInfo"></param>
         /// <returns>Returns int.</returns>
-        public static int RunTimeError(int errorCode, string sAdditionalInfo)
+        public static int RunTimeError(
+            int errorCode, 
+            string sAdditionalInfo)
         {
             IntPtr pInfo = AnsiBStrMarshal.Alloc(sAdditionalInfo);
             try
@@ -793,7 +978,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="sInfoName"></param>
         /// <returns>Returns string.</returns>
-        public static string GetRunTimeInfo(string sInfoName)
+        public static string GetRunTimeInfo(
+            string sInfoName)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(sInfoName);
             try

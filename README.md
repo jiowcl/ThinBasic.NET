@@ -41,18 +41,26 @@ if (hThinbasic != 0)
     return;
 }
 
-// Optional: inject host constants before Run
+// Optional: inject host constants / keywords before Run
 Thinbasic.AddEquate("%HOST_EQ", string.Empty, 7, (int)Enums.EquateType.Number);
+
+int hostCalls = 0;
+Thinbasic.LoadSymbol("HostFlag", () => hostCalls++, Enums.ForceOverWrite);
+Thinbasic.LoadSymbol("HostNum", () => 123.5, Enums.ForceOverWrite);
+Thinbasic.LoadSymbol("HostStr$", () => Thinbasic.AllocReturnString("hello"), Enums.ForceOverWrite);
 
 int result = Thinbasic.Run(hThinbasic, scriptBuffer, bufferType, 0, 0, 0, 0, callingProgram, 0);
 int lastError = Thinbasic.GetLastError();
 Thinbasic.Release(hThinbasic);
+Thinbasic.ClearSymbolCallbacks();
 
 if (lastError != 0)
 {
     Console.WriteLine("Script error: " + lastError);
 }
 ```
+
+`LoadSymbol` / `LoadSymbolEx` accept managed delegates (`ThinBasicSubCallback`, `ThinBasicNumberCallback`, `ThinBasicStringCallback`, or any `Delegate`). Callbacks are kept rooted until `ClearSymbolCallbacks()`.
 
 ## License
 

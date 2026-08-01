@@ -16,9 +16,11 @@ namespace ThinBasic.Example
         /// <summary>
         /// Main
         /// </summary>
-        static void Main(string[] args)
+        static void Main(
+            string[] args)
         {
             string scriptPath = @"Sample\test_gui.tbasic";
+
             if (!File.Exists(scriptPath))
             {
                 scriptPath = @"Sample\test_fib.tbasic";
@@ -45,7 +47,9 @@ namespace ThinBasic.Example
         /// <param name="scriptBuffer"></param>
         /// <param name="callingProgram"></param>
         /// <returns>Returns void.</returns>
-        static void RunBuffer(string scriptBuffer, Enums.CallingProgram callingProgram)
+        static void RunBuffer(
+            string scriptBuffer, 
+            Enums.CallingProgram callingProgram)
         {
             int bufferType = (int)Enums.BufferType.IsScript;
 

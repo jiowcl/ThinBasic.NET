@@ -2,27 +2,34 @@
 // Copyright (c) 2019-2026 Jiowcl. All rights reserved.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.IO;
 using System.Text;
 
 namespace ThinBasic.NET.Core.Tests
 {
-    [TestClass()]
+    [TestClass]
+    [DoNotParallelize]
     public class ThinbasicTests
     {
-        [TestMethod()]
-        public void InitTest()
+        [TestCleanup]
+        public void Cleanup()
+        {
+            Thinbasic.ClearSymbolCallbacks();
+        }
+
+        [TestMethod]
+        public void Init_Succeeds_And_ReleaseUsesHandle()
         {
             int hThin = Thinbasic.Init(0, 0, "thinbasic");
 
             Assert.AreEqual(0, hThin);
             Assert.AreEqual(0, Thinbasic.GetLastError());
-
             Assert.AreEqual(0, Thinbasic.Release(hThin));
         }
 
-        [TestMethod()]
-        public void RunTest()
+        [TestMethod]
+        public void Run_ExecutesScript_WithoutRuntimeError()
         {
             string scriptBuffer = "DIM n AS LONG\r\nn = 42\r\n";
             string scriptPath = @"Sample\test.tbasic";
@@ -31,13 +38,17 @@ namespace ThinBasic.NET.Core.Tests
                 scriptBuffer = File.ReadAllText(scriptPath, Encoding.UTF8);
             }
 
-            int bufferType = (int)Enums.BufferType.IsScript;
-            int callingProgram = (int)Enums.CallingProgram.Console;
-
             int hThin = Thinbasic.Init(0, 0, "thinbasic");
             Assert.AreEqual(0, hThin);
 
-            int result = Thinbasic.Run(hThin, scriptBuffer, bufferType, 0, 0, 0, 0, callingProgram, 0);
+            int result = Thinbasic.Run(
+                hThin,
+                scriptBuffer,
+                (int)Enums.BufferType.IsScript,
+                0, 0, 0, 0,
+                (int)Enums.CallingProgram.Console,
+                0);
+
             int lastError = Thinbasic.GetLastError();
             Thinbasic.Release(hThin);
 
@@ -45,17 +56,8 @@ namespace ThinBasic.NET.Core.Tests
             Assert.AreEqual(0, lastError);
         }
 
-        [TestMethod()]
-        public void ReleaseTest()
-        {
-            int hThin = Thinbasic.Init(0, 0, "thinbasic");
-            int result = Thinbasic.Release(hThin);
-
-            Assert.AreEqual(0, result);
-        }
-
-        [TestMethod()]
-        public void HostApiTest()
+        [TestMethod]
+        public void HostApi_Equate_Variable_And_FunctionSimpleCall()
         {
             int hThin = Thinbasic.Init(0, 0, "thinbasic");
             Assert.AreEqual(0, hThin);
@@ -71,7 +73,14 @@ namespace ThinBasic.NET.Core.Tests
                 "  FUNCTION = \"pong\"\r\n" +
                 "END FUNCTION\r\n";
 
-            int run = Thinbasic.Run(hThin, script, (int)Enums.BufferType.IsScript, 0, 0, 0, 0, (int)Enums.CallingProgram.Console, 0);
+            int run = Thinbasic.Run(
+                hThin,
+                script,
+                (int)Enums.BufferType.IsScript,
+                0, 0, 0, 0,
+                (int)Enums.CallingProgram.Console,
+                0);
+
             Assert.AreEqual(0, run);
             Assert.AreEqual(0, Thinbasic.GetLastError());
 
@@ -89,11 +98,102 @@ namespace ThinBasic.NET.Core.Tests
 
             double num;
             string str;
-            int call = Thinbasic.FunctionSimpleCall("Ping", out num, out str);
-            Assert.AreEqual(0, call);
+            Assert.AreEqual(0, Thinbasic.FunctionSimpleCall("Ping", out num, out str));
             Assert.AreEqual("pong", str);
 
             Thinbasic.Release(hThin);
+        }
+
+        [TestMethod]
+        public void LoadSymbol_DelegateCallbacks_AreInvokedFromScript()
+        {
+            int calls = 0;
+            ThinBasicSubCallback sub = () => calls++;
+            ThinBasicNumberCallback number = () => 123.5;
+            ThinBasicStringCallback text = () => Thinbasic.AllocReturnString("hello");
+
+            int hThin = Thinbasic.Init(0, 0, "thinbasic");
+            Assert.AreEqual(0, hThin);
+
+            Assert.IsTrue(Thinbasic.LoadSymbol("HostFlag", sub, Enums.ForceOverWrite) > 0);
+            Assert.IsTrue(Thinbasic.LoadSymbol("HostNum", number, Enums.ForceOverWrite) > 0);
+            Assert.IsTrue(Thinbasic.LoadSymbolEx(
+                "HostStr$",
+                (int)Enums.ReturnType.String,
+                text,
+                Enums.ForceOverWrite,
+                "HostStr$",
+                "test") > 0);
+
+            string script =
+                "HostFlag\r\n" +
+                "DIM n AS EXT\r\n" +
+                "DIM s AS STRING\r\n" +
+                "n = HostNum\r\n" +
+                "s = HostStr$\r\n" +
+                "FUNCTION GetS() AS STRING\r\n" +
+                "  FUNCTION = s\r\n" +
+                "END FUNCTION\r\n";
+
+            int run = Thinbasic.Run(
+                hThin,
+                script,
+                (int)Enums.BufferType.IsScript,
+                0, 0, 0, 0,
+                (int)Enums.CallingProgram.Console,
+                0);
+
+            Assert.AreEqual(0, run);
+            Assert.AreEqual(0, Thinbasic.GetLastError());
+            Assert.AreEqual(1, calls);
+            Assert.AreEqual(123.5, Thinbasic.VariableGetValueNum("n"), 0.0001);
+
+            double num;
+            string str;
+            Assert.AreEqual(0, Thinbasic.FunctionSimpleCall("GetS", out num, out str));
+            Assert.AreEqual("hello", str);
+
+            Thinbasic.Release(hThin);
+        }
+
+        [TestMethod]
+        public void LoadSymbol_NullFunctionPointer_DoesNotThrow()
+        {
+            int hThin = Thinbasic.Init(0, 0, "thinbasic");
+            Assert.AreEqual(0, hThin);
+
+            // SDK documents -3 for invalid pointers; some thinCore builds still accept null at registration.
+            int result = Thinbasic.LoadSymbol("BadPtr", (int)Enums.ReturnType.None, IntPtr.Zero, Enums.ForceOverWrite);
+            Thinbasic.Release(hThin);
+
+            Assert.IsTrue(result == -3 || result > 0, "Unexpected LoadSymbol result: " + result);
+        }
+
+        [TestMethod]
+        public void LoadSymbol_EmptyName_ReturnsEmptyNameError()
+        {
+            int hThin = Thinbasic.Init(0, 0, "thinbasic");
+            Assert.AreEqual(0, hThin);
+
+            ThinBasicSubCallback sub = () => { };
+            int result = Thinbasic.LoadSymbol(string.Empty, sub, Enums.ForceOverWrite);
+            Thinbasic.Release(hThin);
+
+            // SDK: -1 = empty SymbolName
+            Assert.AreEqual(-1, result);
+        }
+
+        [TestMethod]
+        public void LoadSymbol_DelegateNull_Throws()
+        {
+            try
+            {
+                Thinbasic.LoadSymbol("X", (int)Enums.ReturnType.None, (Delegate)null, 0);
+                Assert.Fail("Expected ArgumentNullException.");
+            }
+            catch (ArgumentNullException)
+            {
+            }
         }
     }
 }
