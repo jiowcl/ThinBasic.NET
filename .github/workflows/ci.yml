@@ -12,48 +12,45 @@ jobs:
     name: Build & test (Windows x86)
     runs-on: windows-latest
     env:
-      # 32-bit testhost must resolve x86 hostfxr; architecture-less DOTNET_ROOT
-      # pointing at x64 causes HRESULT 0x800700C1 (ERROR_BAD_EXE_FORMAT).
+      # 32-bit testhost must resolve x86 hostfxr / shared frameworks.
       "DOTNET_ROOT(x86)": C:\Program Files (x86)\dotnet
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # architecture= requires setup-dotnet v6+. Install x86 first; x64 setup
-      # afterward keeps the `dotnet` CLI on PATH as x64.
-      - name: Setup .NET (x86)
+      - name: Setup .NET (x64 SDK)
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.0.x
             9.0.x
             10.0.x
-          architecture: x86
 
-      - name: Setup .NET (x64)
-        uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: |
-            8.0.x
-            9.0.x
-            10.0.x
-          architecture: x64
-
-      - name: Verify x86 hostfxr
+      # setup-dotnet architecture=x86 can skip some shared frameworks (seen: no 9.x x86).
+      # Install Microsoft.NETCore.App x86 explicitly for every TFM under test.
+      - name: Install .NET x86 shared frameworks
         shell: pwsh
         run: |
-          $fxr = Join-Path ${env:ProgramFiles(x86)} "dotnet\host\fxr"
-          if (-not (Test-Path $fxr)) { throw "Missing x86 hostfxr directory: $fxr" }
-          Get-ChildItem $fxr | ForEach-Object { $_.FullName }
-          $dll = Get-ChildItem $fxr -Recurse -Filter hostfxr.dll | Select-Object -First 1
-          if (-not $dll) { throw "hostfxr.dll not found under $fxr" }
-          Write-Host "Using $($dll.FullName)"
+          $script = Join-Path $env:RUNNER_TEMP "dotnet-install.ps1"
+          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile $script
+          $installDir = Join-Path ${env:ProgramFiles(x86)} "dotnet"
+          foreach ($channel in @("8.0", "9.0", "10.0")) {
+            Write-Host "Installing Microsoft.NETCore.App $channel (x86) -> $installDir"
+            & $script -Channel $channel -Architecture x86 -Runtime dotnet -InstallDir $installDir
+            if ($LASTEXITCODE -ne 0) { throw "dotnet-install failed for channel $channel (x86)" }
+          }
+          $shared = Join-Path $installDir "shared\Microsoft.NETCore.App"
+          Write-Host "Installed x86 frameworks:"
+          Get-ChildItem $shared | ForEach-Object { Write-Host " - $($_.Name)" }
+          foreach ($prefix in @("8.", "9.", "10.")) {
+            $found = @(Get-ChildItem $shared -Directory | Where-Object { $_.Name.StartsWith($prefix) })
+            if ($found.Count -eq 0) { throw "Missing x86 Microsoft.NETCore.App $prefix*" }
+          }
 
       - name: Restore
         run: dotnet restore ThinBasic.NET.sln
 
-      # Solution Release|x86 must map tests to Platform=x86 so outputs land in bin/x86/Release.
       - name: Build
         run: dotnet build ThinBasic.NET.sln -c Release -p:Platform=x86 --no-restore
 
