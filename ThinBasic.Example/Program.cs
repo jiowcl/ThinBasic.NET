@@ -9,7 +9,7 @@ using ThinBasic.NET.Core;
 namespace ThinBasic.Example
 {
     /// <summary>
-    /// Runnable demos: embed | host | parser | array | isolated
+    /// Runnable demos: embed | host | parser | array | isolated | hash
     /// </summary>
     public class Program
     {
@@ -41,6 +41,9 @@ namespace ThinBasic.Example
                         break;
                     case "isolated":
                         RunIsolated();
+                        break;
+                    case "hash":
+                        RunHash();
                         break;
                     case "help":
                     case "-h":
@@ -83,6 +86,7 @@ namespace ThinBasic.Example
             Console.WriteLine("  parser    HostAdd / HostJoin$ with parser APIs");
             Console.WriteLine("  array     Array inspect / direct element update");
             Console.WriteLine("  isolated  InitIsolated + IsolationPath");
+            Console.WriteLine("  hash      thinCore Hash_New / Set / Get / Free");
         }
 
         /// <summary>
@@ -293,6 +297,30 @@ namespace ThinBasic.Example
                 catch
                 {
                 }
+            }
+        }
+
+        /// <summary>
+        /// Run the hash mode (no Init required).
+        /// </summary>
+        static void RunHash()
+        {
+            Console.WriteLine("=== hash ===");
+
+            int pHash = Thinbasic.HashNew(100);
+            try
+            {
+                Thinbasic.HashSet(pHash, "name", "thinBasic");
+                Thinbasic.HashSet(pHash, "ver", "1.0");
+                Console.WriteLine("Count = " + Thinbasic.HashCount(pHash));
+                Console.WriteLine("name = " + Thinbasic.HashGet(pHash, "name"));
+                Console.WriteLine("missing = " + Thinbasic.HashGetDefault(pHash, "nope", "(default)"));
+                Console.WriteLine("Keys = " + Thinbasic.HashGetKeys(pHash));
+                Console.WriteLine(Thinbasic.HashToString(pHash));
+            }
+            finally
+            {
+                Thinbasic.HashFree(pHash);
             }
         }
 

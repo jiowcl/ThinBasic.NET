@@ -376,5 +376,59 @@ namespace ThinBasic.NET.Core.Tests
             {
             }
         }
+
+        [TestMethod]
+        public void Hash_SetGetExists_CloneDelClearFree()
+        {
+            // Hash tables are process-global thinCore storage; Init is not required.
+            int pHash = Thinbasic.HashNew(100);
+            Assert.AreNotEqual(0, pHash);
+            Assert.AreNotEqual(0, Thinbasic.HashValidate(pHash));
+            Assert.AreEqual(100, Thinbasic.HashCapGet(pHash));
+            Assert.AreEqual(0, Thinbasic.HashCount(pHash));
+
+            Assert.AreEqual(0, Thinbasic.HashSet(pHash, "alpha", "one"));
+            Assert.AreEqual(0, Thinbasic.HashAdd(pHash, "beta", "two"));
+            Assert.AreEqual(2, Thinbasic.HashCount(pHash));
+            Assert.AreNotEqual(0, Thinbasic.HashExists(pHash, "alpha"));
+            Assert.AreEqual(0, Thinbasic.HashExists(pHash, "missing"));
+            Assert.AreEqual("one", Thinbasic.HashGet(pHash, "alpha"));
+            Assert.IsNull(Thinbasic.HashGet(pHash, "missing"));
+            Assert.AreEqual("DEF", Thinbasic.HashGetDefault(pHash, "missing", "DEF"));
+            Assert.AreNotEqual(0, Thinbasic.HashGetPtr(pHash, "alpha"));
+            Assert.AreEqual(0, Thinbasic.HashGetPtr(pHash, "missing"));
+
+            string keys = Thinbasic.HashGetKeys(pHash, "|") ?? string.Empty;
+            StringAssert.Contains(keys, "alpha");
+            StringAssert.Contains(keys, "beta");
+
+            string dump = Thinbasic.HashToString(pHash) ?? string.Empty;
+            StringAssert.Contains(dump, "alpha");
+            StringAssert.Contains(dump, "one");
+
+            Assert.AreEqual(0, Thinbasic.HashSet(pHash, "alpha", "ONE"));
+            Assert.AreEqual("ONE", Thinbasic.HashGet(pHash, "alpha"));
+            Assert.AreEqual(2, Thinbasic.HashCount(pHash));
+
+            int clone = Thinbasic.HashClone(pHash);
+            Assert.AreNotEqual(0, clone);
+            Assert.AreEqual(2, Thinbasic.HashCount(clone));
+            Assert.AreEqual("ONE", Thinbasic.HashGet(clone, "alpha"));
+
+            Assert.AreEqual(0, Thinbasic.HashDel(pHash, "alpha"));
+            Assert.AreEqual(1, Thinbasic.HashCount(pHash));
+            Assert.AreEqual(0, Thinbasic.HashExists(pHash, "alpha"));
+            Assert.AreEqual(2, Thinbasic.HashCount(clone));
+
+            Assert.AreEqual(0, Thinbasic.HashClear(pHash));
+            Assert.AreEqual(0, Thinbasic.HashCount(pHash));
+
+            // CapSet returns the previous capacity.
+            Assert.AreEqual(100, Thinbasic.HashCapSet(pHash, 200));
+            Assert.AreEqual(200, Thinbasic.HashCapGet(pHash));
+
+            Assert.AreEqual(0, Thinbasic.HashFree(pHash));
+            Assert.AreEqual(0, Thinbasic.HashFree(clone));
+        }
     }
 }

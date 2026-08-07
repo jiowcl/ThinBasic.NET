@@ -67,6 +67,11 @@ Prefer validating scripts; avoid relying on failed `Run` calls inside long-lived
 After `InitIsolated`, `IsIsolated()` is non-zero and `IsolationPath()` returns that path.  
 Isolation flags may remain set for the process after `Release` (thinCore global state).
 
+### Hash tables
+
+`HashNew` / `HashSet` / `HashGet` / `HashFree` use thinCore’s internal string hash storage.  
+`Init` is not required. Keys are case-sensitive; always `HashFree` handles you create (including clones).
+
 ## Quick start
 
 ```csharp
@@ -144,6 +149,7 @@ dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- host
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- parser
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- array
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- isolated
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- hash
 ```
 
 ## Build & test
@@ -165,6 +171,7 @@ dotnet test ThinBasic.NETTests\ThinBasic.NETTests.csproj -c Release -p:Platform=
 | Parser | `CheckOpen/CloseParens*`, `CheckComma*`, `ParseNumber` / `ParseString`, `PutBack`, `GetToken*` |
 | Arrays | `VariableIsArray`, `ArrayGetElements` / `Ptr` / `Info`, `VariableRedim`, `*Direct` |
 | Isolation | `IsIsolated`, `IsolationPath`, `IsBundled`, `ResourcesCount` / `GetFile` / `GetBuffer` |
+| Hash | `HashNew` / `Free` / `Set` / `Add` / `Get` / `GetDefault` / `Exists` / `Del` / `Count` / `Clone` / `Clear` / `GetKeys` / `ToString` / `Cap*` / `Validate` |
 
 ## License
 
@@ -174,7 +181,7 @@ Code released under the MIT license.
 
 ## TODO
 
-- More thinCore.dll APIs (class / hash)  
+- More thinCore.dll APIs (class)  
 
 
 ## Donation

@@ -4,16 +4,16 @@
     <TargetFrameworks>net10.0-windows;net9.0-windows;net8.0-windows</TargetFrameworks>
     <Company>Inwazy Technology</Company>
     <Copyright>Ji-Feng Tsai</Copyright>
-    <Description>.NET 8/9/10 Windows x86 wrapper for ThinBasic (thinCore.dll): embed scripts, host keywords, parser helpers, arrays, and isolation APIs.</Description>
+    <Description>.NET 8/9/10 Windows x86 wrapper for ThinBasic (thinCore.dll): embed scripts, host keywords, parser helpers, arrays, isolation, and hash table APIs.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
-    <PackageReleaseNotes>Isolation APIs (InitIsolated, IsolationPath, …); expanded README/NuGet docs for x86, ANSI BSTR, callbacks, and Direct pointers.</PackageReleaseNotes>
+    <PackageReleaseNotes>Hash table APIs (HashNew/Set/Get/Free, …); Isolation APIs; README docs for x86, ANSI BSTR, callbacks, and Direct pointers.</PackageReleaseNotes>
     <PackageTags>thinbasic;thincore;scripting;pinvoke;windows;x86</PackageTags>
     <Authors>Jiowcl</Authors>
     <PackageProjectUrl>https://github.com/jiowcl/ThinBasic.NET</PackageProjectUrl>
     <Platforms>AnyCPU;x86</Platforms>
-    <Version>1.0.8</Version>
+    <Version>1.0.9</Version>
     <PackageIcon></PackageIcon>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
