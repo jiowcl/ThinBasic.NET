@@ -5,6 +5,7 @@ Embed ThinBasic scripts in .NET apps, inject host constants/keywords, and parse 
 
 ![GitHub](https://img.shields.io/github/license/jiowcl/ThinBasic.NET.svg)
 ![Nuget](https://img.shields.io/nuget/v/ThinBasic.NET)
+![CI](https://github.com/jiowcl/ThinBasic.NET/actions/workflows/ci.yml/badge.svg)
 
 ## Requirements
 
@@ -174,7 +175,7 @@ Code released under the MIT license.
 ## TODO
 
 - More thinCore.dll APIs (class / hash)  
-- CI for net8 / net9 / net10 x86  
+
 
 ## Donation
 

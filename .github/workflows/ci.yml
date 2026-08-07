@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    name: Build & test (Windows x86)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore
+        run: dotnet restore ThinBasic.NET.sln
+
+      - name: Build
+        run: dotnet build ThinBasic.NET.sln -c Release -p:Platform=x86 --no-restore
+
+      - name: Test (net8 / net9 / net10)
+        run: >
+          dotnet test ThinBasic.NETTests/ThinBasic.NETTests.csproj
+          -c Release
+          -p:Platform=x86
+          --no-build
+          --verbosity normal
+
+      - name: Pack
+        run: >
+          dotnet pack ThinBasic.NET/ThinBasic.NET.csproj
+          -c Release
+          -p:Platform=x86
+          --no-build
+          --output "${{ github.workspace }}/artifacts"
+
+      - name: Upload nupkg
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget
+          path: artifacts/*.nupkg
+          if-no-files-found: error
