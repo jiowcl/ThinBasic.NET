@@ -29,6 +29,50 @@ namespace ThinBasic.NET.Core.Tests
         }
 
         [TestMethod]
+        public void InitIsolated_SetsIsolationPath_AndRunsScript()
+        {
+            string isoPath = Path.Combine(Path.GetTempPath(), "ThinBasicNET_TestIso_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(isoPath);
+
+            try
+            {
+                int hThin = Thinbasic.InitIsolated(0, 0, "thinbasic", isoPath);
+                Assert.AreEqual(0, hThin);
+                Assert.AreEqual(0, Thinbasic.GetLastError());
+                Assert.AreNotEqual(0, Thinbasic.IsIsolated());
+
+                string reported = Thinbasic.IsolationPath() ?? string.Empty;
+                string expected = Path.TrimEndingDirectorySeparator(Path.GetFullPath(isoPath));
+                string actual = Path.TrimEndingDirectorySeparator(Path.GetFullPath(reported));
+                Assert.AreEqual(expected, actual, StringComparer.OrdinalIgnoreCase);
+
+                int run = Thinbasic.Run(
+                    hThin,
+                    "DIM n AS LONG\r\nn = 7\r\n",
+                    (int)Enums.BufferType.IsScript,
+                    0, 0, 0, 0,
+                    (int)Enums.CallingProgram.Console,
+                    0);
+
+                Assert.AreEqual(0, run);
+                Assert.AreEqual(0, Thinbasic.GetLastError());
+                Assert.AreEqual(7.0, Thinbasic.VariableGetValueNum("n"), 0.0001);
+                Assert.AreEqual(0, Thinbasic.Release(hThin));
+            }
+            finally
+            {
+                try
+                {
+                    Directory.Delete(isoPath, true);
+                }
+                catch
+                {
+                    // Isolation cleanup may leave files locked briefly.
+                }
+            }
+        }
+
+        [TestMethod]
         public void Run_ExecutesScript_WithoutRuntimeError()
         {
             string scriptBuffer = "DIM n AS LONG\r\nn = 42\r\n";

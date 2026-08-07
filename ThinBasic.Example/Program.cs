@@ -9,7 +9,7 @@ using ThinBasic.NET.Core;
 namespace ThinBasic.Example
 {
     /// <summary>
-    /// Runnable demos: embed | host | parser | array
+    /// Runnable demos: embed | host | parser | array | isolated
     /// </summary>
     public class Program
     {
@@ -38,6 +38,9 @@ namespace ThinBasic.Example
                         break;
                     case "array":
                         RunArray();
+                        break;
+                    case "isolated":
+                        RunIsolated();
                         break;
                     case "help":
                     case "-h":
@@ -75,10 +78,11 @@ namespace ThinBasic.Example
         static void PrintUsage()
         {
             Console.WriteLine("ThinBasic.Example modes:");
-            Console.WriteLine("  embed   Run an embedded script (default)");
-            Console.WriteLine("  host    Inject equate + host keywords");
-            Console.WriteLine("  parser  HostAdd / HostJoin$ with parser APIs");
-            Console.WriteLine("  array   Array inspect / direct element update");
+            Console.WriteLine("  embed     Run an embedded script (default)");
+            Console.WriteLine("  host      Inject equate + host keywords");
+            Console.WriteLine("  parser    HostAdd / HostJoin$ with parser APIs");
+            Console.WriteLine("  array     Array inspect / direct element update");
+            Console.WriteLine("  isolated  InitIsolated + IsolationPath");
         }
 
         /// <summary>
@@ -257,6 +261,42 @@ namespace ThinBasic.Example
         }
 
         /// <summary>
+        /// Run the isolated mode.
+        /// </summary>
+        /// <returns>0 for success, 1 for failure.</returns>
+        static void RunIsolated()
+        {
+            Console.WriteLine("=== isolated ===");
+
+            string isoPath = Path.Combine(Path.GetTempPath(), "ThinBasicNET_ExampleIso_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(isoPath);
+
+            try
+            {
+                using (var session = EngineSession.StartIsolated(isoPath))
+                {
+                    Console.WriteLine("IsIsolated = " + Thinbasic.IsIsolated());
+                    Console.WriteLine("IsolationPath = " + Thinbasic.IsolationPath());
+                    Console.WriteLine("IsBundled = " + Thinbasic.IsBundled());
+                    Console.WriteLine("ResourcesCount = " + Thinbasic.ResourcesCount());
+
+                    session.Run("DIM n AS LONG\r\nn = 7\r\n", Enums.CallingProgram.Console);
+                    Console.WriteLine("n = " + Thinbasic.VariableGetValueNum("n"));
+                }
+            }
+            finally
+            {
+                try
+                {
+                    Directory.Delete(isoPath, true);
+                }
+                catch
+                {
+                }
+            }
+        }
+
+        /// <summary>
         /// Small Init/Release helper for demos.
         /// </summary>
         sealed class EngineSession : IDisposable
@@ -284,6 +324,21 @@ namespace ThinBasic.Example
                 if (h != 0)
                 {
                     throw new InvalidOperationException("Init failed: " + h + ", GetLastError=" + Thinbasic.GetLastError());
+                }
+
+                return new EngineSession(h);
+            }
+
+            /// <summary>
+            /// Start a new isolated engine session.
+            /// </summary>
+            public static EngineSession StartIsolated(string isolatedPath)
+            {
+                int h = Thinbasic.InitIsolated(0, 0, "thinbasic", isolatedPath);
+
+                if (h != 0)
+                {
+                    throw new InvalidOperationException("InitIsolated failed: " + h + ", GetLastError=" + Thinbasic.GetLastError());
                 }
 
                 return new EngineSession(h);

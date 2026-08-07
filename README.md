@@ -1,47 +1,83 @@
 # ThinBasic.NET
 
-.Net Wrapper for ThinBasic Programming Language.
+.NET wrapper for the [ThinBasic](https://github.com/ThinBASIC) scripting engine (`thinCore.dll`).  
+Embed ThinBasic scripts in .NET apps, inject host constants/keywords, and parse callback arguments.
 
 ![GitHub](https://img.shields.io/github/license/jiowcl/ThinBasic.NET.svg)
 ![Nuget](https://img.shields.io/nuget/v/ThinBasic.NET)
-![Travis-Ci](https://travis-ci.com/jiowcl/ThinBasic.NET.svg?branch=master)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/c5cd6aeb809142018010cca36f2ea46c)](https://www.codacy.com/gh/jiowcl/ThinBasic.NET/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jiowcl/ThinBasic.NET&amp;utm_campaign=Badge_Grade)
 
-## Environment
+## Requirements
 
-- Windows 10 above (recommend)  
-- ThinBasic 1.14  
-- .NET 8 / 9 / 10 (Windows x86)
+| Item | Detail |
+|------|--------|
+| OS | Windows 10+ |
+| Architecture | **x86 only** (`PlatformTarget=x86`) |
+| .NET | **net8.0-windows / net9.0-windows / net10.0-windows** |
+| Native | Ships `thinCore.dll` + `thinBasic_UI.dll` (ThinBasic 1.14 era) |
 
-## NuGet Installation
+x64 / Arm64 processes cannot load the bundled 32-bit native DLLs.
+
+## NuGet
 
 ```powershell
 PM> Install-Package ThinBasic.NET
 ```
 
-## How to Build
+Consumer projects must target **Windows x86** (or Prefer 32-bit) so `thinCore.dll` can load.
 
-Building requires [Visual Studio 2026 Community](https://visualstudio.microsoft.com/vs/community/) and test under Windows 11.
+## Important notes
 
-## Example
+### Strings (ANSI BSTR)
+
+thinCore string parameters/returns use **ANSI BSTRs** (`SysAllocStringByteLen`), not Unicode `BStr` / `LPStr`.  
+This package marshals them manually. Prefer ASCII / system-ANSI-safe text for symbol names and paths.
+
+For `ThinBasicStringCallback` return values, allocate with:
 
 ```csharp
-string scriptPath = @"Sample\test.tbasic";
-string scriptBuffer = File.ReadAllText(scriptPath, Encoding.UTF8);
+return Thinbasic.AllocReturnString("hello");
+```
 
-int bufferType = (int)Enums.BufferType.IsScript;
-int callingProgram = (int)Enums.CallingProgram.GUI;
+Ownership of that BSTR is transferred to thinCore — do not free it yourself.
 
-int hThinbasic = Thinbasic.Init(0, 0, "thinbasic");
+### Callbacks and GC
 
-if (hThinbasic != 0)
+`LoadSymbol` / `LoadSymbolEx` accept managed delegates and keep them rooted until:
+
+```csharp
+Thinbasic.ClearSymbolCallbacks();
+```
+
+Call `ClearSymbolCallbacks` only when no script may still invoke those keywords.
+
+### Direct variable / array pointers
+
+`GetVariableNumberDirect` / `ChangeVariable*Direct` need the **return value** of `VariableGetInfoEx` (variable structure pointer), **not** the `DataPtr` out-parameter.
+
+### Runtime errors
+
+Script runtime errors may show a thinBasic error dialog and leave process-wide engine state dirty.  
+Prefer validating scripts; avoid relying on failed `Run` calls inside long-lived hosts.  
+`GetLastError` can remain sticky across `Release` / next `Init` in some failure paths.
+
+### Isolation
+
+`InitIsolated` / `InitCheckScript` take an isolation directory for extracted modules/DLLs.  
+After `InitIsolated`, `IsIsolated()` is non-zero and `IsolationPath()` returns that path.  
+Isolation flags may remain set for the process after `Release` (thinCore global state).
+
+## Quick start
+
+```csharp
+using ThinBasic.NET.Core;
+
+int h = Thinbasic.Init(0, 0, "thinbasic");
+if (h != 0)
 {
     Console.WriteLine("Init failed: " + Thinbasic.GetLastError());
-
     return;
 }
 
-// Optional: inject host constants / keywords before Run
 Thinbasic.AddEquate("%HOST_EQ", string.Empty, 7, (int)Enums.EquateType.Number);
 
 int hostCalls = 0;
@@ -49,9 +85,17 @@ Thinbasic.LoadSymbol("HostFlag", () => hostCalls++, Enums.ForceOverWrite);
 Thinbasic.LoadSymbol("HostNum", () => 123.5, Enums.ForceOverWrite);
 Thinbasic.LoadSymbol("HostStr$", () => Thinbasic.AllocReturnString("hello"), Enums.ForceOverWrite);
 
-int result = Thinbasic.Run(hThinbasic, scriptBuffer, bufferType, 0, 0, 0, 0, callingProgram, 0);
+string script = File.ReadAllText(@"Sample\test.tbasic", Encoding.UTF8);
+int result = Thinbasic.Run(
+    h,
+    script,
+    (int)Enums.BufferType.IsScript,
+    0, 0, 0, 0,
+    (int)Enums.CallingProgram.Console,
+    0);
+
 int lastError = Thinbasic.GetLastError();
-Thinbasic.Release(hThinbasic);
+Thinbasic.Release(h);
 Thinbasic.ClearSymbolCallbacks();
 
 if (lastError != 0)
@@ -60,9 +104,7 @@ if (lastError != 0)
 }
 ```
 
-`LoadSymbol` / `LoadSymbolEx` accept managed delegates (`ThinBasicSubCallback`, `ThinBasicNumberCallback`, `ThinBasicStringCallback`, or any `Delegate`). Callbacks are kept rooted until `ClearSymbolCallbacks()`.
-
-Inside a keyword callback, use parser helpers to read script arguments:
+### Parser callbacks
 
 ```csharp
 Thinbasic.LoadSymbol("HostAdd", () =>
@@ -76,25 +118,63 @@ Thinbasic.LoadSymbol("HostAdd", () =>
 }, Enums.ForceOverWrite);
 ```
 
-## Examples  
+### Isolation
+
+```csharp
+string iso = Path.Combine(Path.GetTempPath(), "my-iso");
+Directory.CreateDirectory(iso);
+
+int h = Thinbasic.InitIsolated(0, 0, "thinbasic", iso);
+// Thinbasic.IsIsolated() != 0
+// Thinbasic.IsolationPath() ~= iso
+
+Thinbasic.Run(h, "DIM n AS LONG\r\nn = 1\r\n",
+    (int)Enums.BufferType.IsScript, 0, 0, 0, 0,
+    (int)Enums.CallingProgram.Console, 0);
+
+Thinbasic.Release(h);
+```
+
+## Examples project
 
 ```powershell
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- embed
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- host
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- parser
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- array
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- isolated
 ```
+
+## Build & test
+
+Requires Visual Studio 2022/2026 (or .NET SDK 8+) on Windows.
+
+```powershell
+dotnet build ThinBasic.NET\ThinBasic.NET.csproj -c Release -p:Platform=x86
+dotnet test ThinBasic.NETTests\ThinBasic.NETTests.csproj -c Release -p:Platform=x86
+```
+
+## API surface (summary)
+
+| Area | Highlights |
+|------|------------|
+| Lifecycle | `Init`, `InitIsolated`, `InitCheckScript`, `Run`, `Release`, `AddIncludePath` |
+| Host data | `AddEquate`, `AddVariable`, `ChangeVariable*`, `VariableGet*`, `FunctionSimpleCall` |
+| Keywords | `LoadSymbol` / `LoadSymbolEx` (+ delegate overloads), `AllocReturnString`, `ClearSymbolCallbacks` |
+| Parser | `CheckOpen/CloseParens*`, `CheckComma*`, `ParseNumber` / `ParseString`, `PutBack`, `GetToken*` |
+| Arrays | `VariableIsArray`, `ArrayGetElements` / `Ptr` / `Info`, `VariableRedim`, `*Direct` |
+| Isolation | `IsIsolated`, `IsolationPath`, `IsBundled`, `ResourcesCount` / `GetFile` / `GetBuffer` |
 
 ## License
 
 Copyright (c) 2017-2026 Ji-Feng Tsai.  
 ThinBasic Copyright (c) Eros Olmi [ThinBASIC Interpreter](https://github.com/ThinBASIC).  
-Code released under the MIT license.  
+Code released under the MIT license.
 
 ## TODO
 
-- More thinCore.dll APIs (class / hash / isolation)  
-
+- More thinCore.dll APIs (class / hash)  
+- CI for net8 / net9 / net10 x86  
 
 ## Donation
 
