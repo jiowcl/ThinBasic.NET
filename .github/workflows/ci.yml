@@ -37,10 +37,11 @@ jobs:
           $installDir = Join-Path ${env:ProgramFiles(x86)} "dotnet"
           foreach ($channel in @("8.0", "9.0", "10.0")) {
             Write-Host "Installing Microsoft.NETCore.App $channel (x86) -> $installDir"
-            & $script -Channel $channel -Architecture x86 -Runtime dotnet -InstallDir $installDir
-            if ($LASTEXITCODE -ne 0) { throw "dotnet-install failed for channel $channel (x86)" }
+            # Exit code is unreliable when the runtime is already present; verify folders below.
+            & $script -Channel $channel -Architecture x86 -Runtime dotnet -InstallDir $installDir | Write-Host
           }
           $shared = Join-Path $installDir "shared\Microsoft.NETCore.App"
+          if (-not (Test-Path $shared)) { throw "Missing $shared after install" }
           Write-Host "Installed x86 frameworks:"
           Get-ChildItem $shared | ForEach-Object { Write-Host " - $($_.Name)" }
           foreach ($prefix in @("8.", "9.", "10.")) {
