@@ -23,13 +23,18 @@
 
     <PackageReleaseNotes>1.0.0</PackageReleaseNotes>
 
+    <Platforms>AnyCPU;x86</Platforms>
     <PlatformTarget>x86</PlatformTarget>
 
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <Prefer32Bit>true</Prefer32Bit>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>

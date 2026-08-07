@@ -27,6 +27,7 @@ jobs:
       - name: Restore
         run: dotnet restore ThinBasic.NET.sln
 
+      # Solution Release|x86 must map tests to Platform=x86 so outputs land in bin/x86/Release.
       - name: Build
         run: dotnet build ThinBasic.NET.sln -c Release -p:Platform=x86 --no-restore
 
