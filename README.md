@@ -4,6 +4,8 @@
 Embed ThinBasic scripts in .NET apps, inject host constants/keywords, and parse callback arguments.
 
 ![GitHub](https://img.shields.io/github/license/jiowcl/ThinBasic.NET.svg)
+![.NET](https://img.shields.io/badge/.NET-512BD4?style=flat-square&logo=dotnet&logoColor=white)
+![thinBasic](https://img.shields.io/badge/Language-thinBasic-104E8B?style=flat-square)
 ![Nuget](https://img.shields.io/nuget/v/ThinBasic.NET)
 ![CI](https://github.com/jiowcl/ThinBasic.NET/actions/workflows/ci.yml/badge.svg)
 
