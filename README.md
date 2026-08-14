@@ -74,6 +74,15 @@ Isolation flags may remain set for the process after `Release` (thinCore global 
 `HashNew` / `HashSet` / `HashGet` / `HashFree` use thinCore’s internal string hash storage.  
 `Init` is not required. Keys are case-sensitive; always `HashFree` handles you create (including clones).
 
+### Module classes
+
+`ClassAdd` / `ClassAddMethod` / `ClassAddProperty` register a dotted host class after `Init`.  
+Register `_Create` (`Thinbasic.ClassMethodCreate`) so `obj = NEW ClassName` runs your constructor callback.  
+Inside methods, `ParseClass()` returns the current instance pointer.  
+Class / method / property delegates stay rooted until `ClearSymbolCallbacks`.
+
+This bundled thinCore invokes `_Create` on `NEW`. Instance method calls (`o.GetN`) can still raise runtime **5030** if the engine never marks the variable initialized (the class dispatcher / `ClassAction.Constructor` path is not always invoked).
+
 ## Quick start
 
 ```csharp
@@ -152,6 +161,7 @@ dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- parser
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- array
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- isolated
 dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- hash
+dotnet run --project ThinBasic.Example -c Release -p:Platform=x86 -- class
 ```
 
 ## Build & test
@@ -174,6 +184,7 @@ dotnet test ThinBasic.NETTests\ThinBasic.NETTests.csproj -c Release -p:Platform=
 | Arrays | `VariableIsArray`, `ArrayGetElements` / `Ptr` / `Info`, `VariableRedim`, `*Direct` |
 | Isolation | `IsIsolated`, `IsolationPath`, `IsBundled`, `ResourcesCount` / `GetFile` / `GetBuffer` |
 | Hash | `HashNew` / `Free` / `Set` / `Add` / `Get` / `GetDefault` / `Exists` / `Del` / `Count` / `Clone` / `Clear` / `GetKeys` / `ToString` / `Cap*` / `Validate` |
+| Classes | `ClassAdd`, `ClassAddMethod`, `ClassAddProperty`, `ParseClass`, `ClassInspect`, `ClassOperations` |
 
 ## License
 
@@ -183,7 +194,7 @@ Code released under the MIT license.
 
 ## TODO
 
-- More thinCore.dll APIs (class)  
+- More thinCore.dll APIs (file / unicode / lib helpers)  
 
 
 ## Donation

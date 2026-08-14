@@ -271,5 +271,15 @@ namespace ThinBasic.NET.Core
             GUI = 1,
             Console = 2
         }
+
+        // Module-class dispatcher actions (thinBasic_Class_* / Class_Oprations)
+        public enum ClassAction : int
+        {
+            None = 0,
+            Get = 1,
+            Set = 2,
+            Constructor = 100,
+            Destructor = 110
+        }
     }
 }

@@ -430,5 +430,54 @@ namespace ThinBasic.NET.Core.Tests
             Assert.AreEqual(0, Thinbasic.HashFree(pHash));
             Assert.AreEqual(0, Thinbasic.HashFree(clone));
         }
+
+        [TestMethod]
+        public void ClassApi_RegisterAnd_NewInvokesCreate()
+        {
+            int createCalls = 0;
+            int dispCalls = 0;
+            int methodCalls = 0;
+
+            ThinBasicSubCallback dispatcher = () => { dispCalls++; };
+
+            ThinBasicSubCallback create = () => { createCalls++; };
+
+            ThinBasicNumberCallback getN = () =>
+            {
+                methodCalls++;
+                return 42.0;
+            };
+
+            int hThin = Thinbasic.Init(0, 0, "thinbasic");
+            Assert.AreEqual(0, hThin);
+
+            int pClass = Thinbasic.ClassAdd("cHost", dispatcher);
+            Assert.AreNotEqual(0, pClass, "ClassAdd should return a class handle.");
+            Assert.AreNotEqual(0, Thinbasic.ClassAddMethod(pClass, Thinbasic.ClassMethodCreate, create));
+            Assert.AreNotEqual(0, Thinbasic.ClassAddMethod(pClass, "GetN", getN));
+            Assert.AreNotEqual(0, Thinbasic.ClassAddProperty(pClass, "Tag", (int)Enums.ReturnType.Number, dispatcher));
+
+            string script =
+                "DIM o AS cHost\r\n" +
+                "o = NEW cHost\r\n";
+
+            int run = Thinbasic.Run(
+                hThin,
+                script,
+                (int)Enums.BufferType.IsScript,
+                0, 0, 0, 0,
+                (int)Enums.CallingProgram.Console,
+                0);
+
+            int err = Thinbasic.GetLastError();
+            string inspect = Thinbasic.ClassInspect(pClass, 0, 0);
+            Thinbasic.Release(hThin);
+
+            Assert.AreEqual(0, run, "Run failed err=" + err + " create=" + createCalls + " disp=" + dispCalls);
+            Assert.AreEqual(0, err, "GetLastError=" + err + " create=" + createCalls + " disp=" + dispCalls);
+            Assert.AreNotEqual(0, createCalls, "NEW should invoke _Create. disp=" + dispCalls);
+            _ = methodCalls;
+            _ = inspect;
+        }
     }
 }

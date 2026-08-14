@@ -9,7 +9,7 @@ using ThinBasic.NET.Core;
 namespace ThinBasic.Example
 {
     /// <summary>
-    /// Runnable demos: embed | host | parser | array | isolated | hash
+    /// Runnable demos: embed | host | parser | array | isolated | hash | class
     /// </summary>
     public class Program
     {
@@ -44,6 +44,9 @@ namespace ThinBasic.Example
                         break;
                     case "hash":
                         RunHash();
+                        break;
+                    case "class":
+                        RunClass();
                         break;
                     case "help":
                     case "-h":
@@ -87,6 +90,7 @@ namespace ThinBasic.Example
             Console.WriteLine("  array     Array inspect / direct element update");
             Console.WriteLine("  isolated  InitIsolated + IsolationPath");
             Console.WriteLine("  hash      thinCore Hash_New / Set / Get / Free");
+            Console.WriteLine("  class     ClassAdd + _Create (NEW operator)");
         }
 
         /// <summary>
@@ -253,6 +257,7 @@ namespace ThinBasic.Example
 
                 int mainType, subType, isArray, dataPtr, nElements;
                 int varPtr = Thinbasic.VariableGetInfoEx("a", out mainType, out subType, out isArray, out dataPtr, out nElements);
+                
                 Console.WriteLine("varPtr = " + varPtr + ", nElements = " + nElements);
 
                 Thinbasic.ChangeVariableNumberDirect(varPtr, 2, 99.5);
@@ -308,6 +313,7 @@ namespace ThinBasic.Example
             Console.WriteLine("=== hash ===");
 
             int pHash = Thinbasic.HashNew(100);
+
             try
             {
                 Thinbasic.HashSet(pHash, "name", "thinBasic");
@@ -325,10 +331,41 @@ namespace ThinBasic.Example
         }
 
         /// <summary>
+        /// Run the class mode: register a host class and construct it with NEW.
+        /// </summary>
+        static void RunClass()
+        {
+            Console.WriteLine("=== class ===");
+
+            int created = 0;
+            ThinBasicSubCallback create = () => created++;
+            ThinBasicNumberCallback getN = () => 42.0;
+
+            using (var session = EngineSession.Start())
+            {
+                int pClass = Thinbasic.ClassAdd("cHost", (ThinBasicClassCallback)((p, v, a) => 1));
+                Console.WriteLine("ClassAdd = " + pClass);
+                Console.WriteLine("_Create = " + Thinbasic.ClassAddMethod(pClass, Thinbasic.ClassMethodCreate, create));
+                Console.WriteLine("GetN = " + Thinbasic.ClassAddMethod(pClass, "GetN", getN));
+
+                int result = session.Run(
+                    "DIM o AS cHost\r\no = NEW cHost\r\n",
+                    Enums.CallingProgram.Console);
+
+                Console.WriteLine("Run result: " + result);
+                Console.WriteLine("GetLastError: " + Thinbasic.GetLastError());
+                Console.WriteLine("_Create calls: " + created);
+            }
+        }
+
+        /// <summary>
         /// Small Init/Release helper for demos.
         /// </summary>
         sealed class EngineSession : IDisposable
         {
+            /// <summary>
+            /// The handle to the engine session.
+            /// </summary>
             public int Handle { get; }
 
             /// <summary>
@@ -360,7 +397,10 @@ namespace ThinBasic.Example
             /// <summary>
             /// Start a new isolated engine session.
             /// </summary>
-            public static EngineSession StartIsolated(string isolatedPath)
+            /// <param name="isolatedPath">The path to the isolated engine session.</param>
+            /// <returns>A new EngineSession instance.</returns>
+            public static EngineSession StartIsolated(
+                string isolatedPath)
             {
                 int h = Thinbasic.InitIsolated(0, 0, "thinbasic", isolatedPath);
 

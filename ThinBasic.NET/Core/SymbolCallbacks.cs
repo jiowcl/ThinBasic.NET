@@ -29,6 +29,14 @@ namespace ThinBasic.NET.Core
     public delegate IntPtr ThinBasicStringCallback();
 
     /// <summary>
+    /// Module-class dispatcher (constructor / destructor / property get-set).
+    /// <paramref name="pClass"/> is the handle from <see cref="Thinbasic.ClassAdd"/>;
+    /// <paramref name="pVar"/> is the class variable pointer; <paramref name="lAction"/> is <see cref="Enums.ClassAction"/>.
+    /// </summary>
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+    public delegate int ThinBasicClassCallback(int pClass, int pVar, int lAction);
+
+    /// <summary>
     /// Keeps managed delegates rooted so GC cannot collect callbacks registered with thinCore.
     /// </summary>
     internal static class SymbolCallbackTable
