@@ -26,7 +26,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="value"></param>
         /// <returns>Returns Ext80.</returns>
-        public static Ext80 FromDouble(double value)
+        public static Ext80 FromDouble(
+            double value)
         {
             Ext80 ext;
 
@@ -58,7 +59,9 @@ namespace ThinBasic.NET.Core
         /// <param name="d"></param>
         /// <param name="ext"></param>
         /// <returns>Returns void.</returns>
-        private static unsafe void DoubleToExt(double d, byte* ext)
+        private static unsafe void DoubleToExt(
+            double d, 
+            byte* ext)
         {
             ulong bits = (ulong)BitConverter.DoubleToInt64Bits(d);
             int sign = (int)(bits >> 63);
@@ -129,7 +132,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="ext"></param>
         /// <returns>Returns double.</returns>
-        private static unsafe double ExtToDouble(byte* ext)
+        private static unsafe double ExtToDouble(
+            byte* ext)
         {
             ulong mant = 0;
 
@@ -184,7 +188,10 @@ namespace ThinBasic.NET.Core
         /// <param name="mant"></param>
         /// <param name="e"></param>
         /// <returns>Returns void.</returns>
-        private static unsafe void Write(byte* ext, ulong mant, int e)
+        private static unsafe void Write(
+            byte* ext, 
+            ulong mant, 
+            int e)
         {
             for (int i = 0; i < 8; i++)
             {

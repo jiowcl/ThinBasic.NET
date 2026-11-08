@@ -19,7 +19,8 @@ namespace ThinBasic.NET.Core
         /// <param name="lCount">Expected key count (thinCore clamps small values; typically use ≥ 100).</param>
         /// <returns>Hash handle (pointer-sized value); free with <see cref="HashFree"/>.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_New", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashNewNative(int lCount);
+        private static extern int HashNewNative(
+            int lCount);
 
         /// <summary>
         /// Hash_Free
@@ -27,7 +28,8 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <returns>0 on success, non-zero on error.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Free", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashFreeNative(int pHash);
+        private static extern int HashFreeNative(
+            int pHash);
 
         /// <summary>
         /// Hash_Count
@@ -35,7 +37,8 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <returns>Number of key/value pairs in the table.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Count", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashCountNative(int pHash);
+        private static extern int HashCountNative(
+            int pHash);
 
         /// <summary>
         /// Hash_Clone
@@ -43,7 +46,8 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <returns>Hash handle (pointer-sized value); free with <see cref="HashFree"/>.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Clone", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashCloneNative(int pHash);
+        private static extern int HashCloneNative(
+            int pHash);
 
         /// <summary>
         /// Hash_Clear
@@ -51,7 +55,8 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <returns>0 on success, non-zero on error.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Clear", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashClearNative(int pHash);
+        private static extern int HashClearNative(
+            int pHash);
 
         /// <summary>
         /// Hash_Validate
@@ -59,7 +64,8 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <returns>0 on success, non-zero on error.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Validate", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashValidateNative(int pHash);
+        private static extern int HashValidateNative(
+            int pHash);
 
         /// <summary>
         /// Hash_CapGet
@@ -67,7 +73,8 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <returns>Current capacity of the table.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_CapGet", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashCapGetNative(int pHash);
+        private static extern int HashCapGetNative(
+            int pHash);
 
         /// <summary>
         /// Hash_CapSet
@@ -76,7 +83,9 @@ namespace ThinBasic.NET.Core
         /// <param name="lCap">New capacity.</param>
         /// <returns>Previous capacity.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_CapSet", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashCapSetNative(int pHash, int lCap);
+        private static extern int HashCapSetNative(
+            int pHash, 
+            int lCap);
 
         /// <summary>
         /// Hash_GetKeys
@@ -85,7 +94,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sSep">Separator string.</param>
         /// <returns>Keys joined by <paramref name="sSep"/>.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_GetKeys", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr HashGetKeysNative(int pHash, IntPtr sSep);
+        private static extern IntPtr HashGetKeysNative(
+            int pHash, 
+            IntPtr sSep);
 
         /// <summary>
         /// Hash_Set
@@ -95,7 +106,10 @@ namespace ThinBasic.NET.Core
         /// <param name="sData">Data string.</param>
         /// <returns>0 on success, non-zero on error.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Set", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashSetNative(int pHash, IntPtr sKey, IntPtr sData);
+        private static extern int HashSetNative(
+            int pHash, 
+            IntPtr sKey, 
+            IntPtr sData);
 
         /// <summary>
         /// Hash_Add
@@ -105,7 +119,10 @@ namespace ThinBasic.NET.Core
         /// <param name="sData">Data string.</param>
         /// <returns>0 on success, non-zero on error.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Add", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashAddNative(int pHash, IntPtr sKey, IntPtr sData);
+        private static extern int HashAddNative(
+            int pHash, 
+            IntPtr sKey, 
+            IntPtr sData);
 
         /// <summary>
         /// Hash_Get
@@ -114,7 +131,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey">Key string.</param>
         /// <returns>Value for <paramref name="sKey"/>, or <c>null</c> when missing.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Get", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr HashGetNative(int pHash, IntPtr sKey);
+        private static extern IntPtr HashGetNative(
+            int pHash, 
+            IntPtr sKey);
 
         /// <summary>
         /// Hash_Get_Default
@@ -124,7 +143,10 @@ namespace ThinBasic.NET.Core
         /// <param name="sDefault">Default value string.</param>
         /// <returns>Value for <paramref name="sKey"/>, or <paramref name="sDefault"/> when missing.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Get_Default", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr HashGetDefaultNative(int pHash, IntPtr sKey, IntPtr sDefault);
+        private static extern IntPtr HashGetDefaultNative(
+            int pHash, 
+            IntPtr sKey, 
+            IntPtr sDefault);
 
         /// <summary>
         /// Hash_GetPtr
@@ -133,7 +155,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey">Key string.</param>
         /// <returns>Native pointer to the stored value for <paramref name="sKey"/>, or 0 when missing.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_GetPtr", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashGetPtrNative(int pHash, IntPtr sKey);
+        private static extern int HashGetPtrNative(
+            int pHash, 
+            IntPtr sKey);
 
         /// <summary>
         /// Hash_Del
@@ -142,7 +166,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey">Key string.</param>
         /// <returns>0 on success, non-zero on error.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Del", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashDelNative(int pHash, IntPtr sKey);
+        private static extern int HashDelNative(
+            int pHash, 
+            IntPtr sKey);
 
         /// <summary>
         /// Hash_Exists
@@ -151,7 +177,9 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey">Key string.</param>
         /// <returns>Non-zero when <paramref name="sKey"/> exists (case-sensitive).</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_Exists", CallingConvention = CallingConvention.StdCall)]
-        private static extern int HashExistsNative(int pHash, IntPtr sKey);
+        private static extern int HashExistsNative(
+            int pHash, 
+            IntPtr sKey);
 
         /// <summary>
         /// Hash_ToString
@@ -160,14 +188,17 @@ namespace ThinBasic.NET.Core
         /// <param name="lType">Format selector; 0 is the default thinCore layout.</param>
         /// <returns>Serialized table string.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Hash_ToString", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr HashToStringNative(int pHash, int lType);
+        private static extern IntPtr HashToStringNative(
+            int pHash, 
+            int lType);
 
         /// <summary>
         /// Create a new string/string hash table.
         /// </summary>
         /// <param name="initialCapacity">Expected key count (thinCore clamps small values; typically use ≥ 100).</param>
         /// <returns>Hash handle (pointer-sized value); free with <see cref="HashFree"/>.</returns>
-        public static int HashNew(int initialCapacity = 100)
+        public static int HashNew(
+            int initialCapacity = 100)
         {
             return HashNewNative(initialCapacity);
         }
@@ -177,7 +208,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <returns>0 on success, non-zero on error.</returns>
-        public static int HashFree(int pHash)
+        public static int HashFree(
+            int pHash)
         {
             return HashFreeNative(pHash);
         }
@@ -187,7 +219,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <returns>Number of key/value pairs in the table.</returns>
-        public static int HashCount(int pHash)
+        public static int HashCount(
+            int pHash)
         {
             return HashCountNative(pHash);
         }
@@ -197,7 +230,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <returns>Hash handle (pointer-sized value); free with <see cref="HashFree"/>.</returns>
-        public static int HashClone(int pHash)
+        public static int HashClone(
+            int pHash)
         {
             return HashCloneNative(pHash);
         }
@@ -207,7 +241,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <returns>0 on success, non-zero on error.</returns>
-        public static int HashClear(int pHash)
+        public static int HashClear(
+            int pHash)
         {
             return HashClearNative(pHash);
         }
@@ -217,7 +252,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <returns>0 on success, non-zero on error.</returns>
-        public static int HashValidate(int pHash)
+        public static int HashValidate(
+            int pHash)
         {
             return HashValidateNative(pHash);
         }
@@ -227,7 +263,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <returns>Current capacity of the table.</returns>
-        public static int HashCapGet(int pHash)
+        public static int HashCapGet(
+            int pHash)
         {
             return HashCapGetNative(pHash);
         }
@@ -238,7 +275,9 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <param name="capacity">New capacity.</param>
         /// <returns>Previous capacity.</returns>
-        public static int HashCapSet(int pHash, int capacity)
+        public static int HashCapSet(
+            int pHash, 
+            int capacity)
         {
             return HashCapSetNative(pHash, capacity);
         }
@@ -250,7 +289,9 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <param name="separator">Separator string.</param>
         /// <returns>Keys joined by <paramref name="separator"/>.</returns>
-        public static string HashGetKeys(int pHash, string separator = "|")
+        public static string HashGetKeys(
+            int pHash, 
+            string separator = "|")
         {
             IntPtr pSep = AnsiBStrMarshal.Alloc(separator ?? "|");
             try
@@ -270,7 +311,10 @@ namespace ThinBasic.NET.Core
         /// <param name="key">Key string.</param>
         /// <param name="data">Data string.</param>
         /// <returns>0 on success, non-zero on error.</returns>
-        public static int HashSet(int pHash, string key, string data)
+        public static int HashSet(
+            int pHash, 
+            string key, 
+            string data)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
             IntPtr pData = AnsiBStrMarshal.Alloc(data);
@@ -293,7 +337,10 @@ namespace ThinBasic.NET.Core
         /// <param name="key">Key string.</param>
         /// <param name="data">Data string.</param>
         /// <returns>0 on success, non-zero on error.</returns>
-        public static int HashAdd(int pHash, string key, string data)
+        public static int HashAdd(
+            int pHash, 
+            string key, 
+            string data)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
             IntPtr pData = AnsiBStrMarshal.Alloc(data);
@@ -315,7 +362,9 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <param name="key">Key string.</param>
         /// <returns>Value for <paramref name="key"/>, or <c>null</c> when missing.</returns>
-        public static string HashGet(int pHash, string key)
+        public static string HashGet(
+            int pHash, 
+            string key)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
 
@@ -336,7 +385,10 @@ namespace ThinBasic.NET.Core
         /// <param name="key">Key string.</param>
         /// <param name="defaultValue">Default value string.</param>
         /// <returns>Value for <paramref name="key"/>, or <paramref name="defaultValue"/> when missing.</returns>
-        public static string HashGetDefault(int pHash, string key, string defaultValue = "")
+        public static string HashGetDefault(
+            int pHash, 
+            string key, 
+            string defaultValue = "")
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
             IntPtr pDefault = AnsiBStrMarshal.Alloc(defaultValue ?? string.Empty);
@@ -359,7 +411,9 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <param name="key">Key string.</param>
         /// <returns>Native pointer to the stored value for <paramref name="key"/>, or 0 when missing.</returns>
-        public static int HashGetPtr(int pHash, string key)
+        public static int HashGetPtr(
+            int pHash, 
+            string key)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
             try
@@ -378,7 +432,9 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <param name="key">Key string.</param>
         /// <returns>0 on success, non-zero on error.</returns>
-        public static int HashDel(int pHash, string key)
+        public static int HashDel(
+            int pHash, 
+            string key)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
             try
@@ -397,7 +453,9 @@ namespace ThinBasic.NET.Core
         /// <param name="pHash">Hash handle.</param>
         /// <param name="key">Key string.</param>
         /// <returns>Non-zero when <paramref name="key"/> exists (case-sensitive).</returns>
-        public static int HashExists(int pHash, string key)
+        public static int HashExists(
+            int pHash, 
+            string key)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(key);
             try
@@ -415,7 +473,9 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="pHash">Hash handle.</param>
         /// <param name="type">Format selector; 0 is the default thinCore layout.</param>
-        public static string HashToString(int pHash, int type = 0)
+        public static string HashToString(
+            int pHash, 
+            int type = 0)
         {
             return AnsiBStrMarshal.PtrToStringAndFree(HashToStringNative(pHash, type));
         }

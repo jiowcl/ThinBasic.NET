@@ -20,7 +20,11 @@ namespace ThinBasic.NET.Core
         /// <param name="isolatedPath">The path to the isolated resources.</param>
         /// <returns>The handle to the isolated instance.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Init_Isolated", CallingConvention = CallingConvention.StdCall)]
-        private static extern int InitIsolatedNative(int hWnd, int cInstance, IntPtr sKey, IntPtr isolatedPath);
+        private static extern int InitIsolatedNative(
+            int hWnd, 
+            int cInstance, 
+            IntPtr sKey, 
+            IntPtr isolatedPath);
 
         /// <summary>
         /// InitCheckScript
@@ -31,7 +35,11 @@ namespace ThinBasic.NET.Core
         /// <param name="isolatedPath">The path to the isolated resources.</param>
         /// <returns>The handle to the isolated instance.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Init_CheckScript", CallingConvention = CallingConvention.StdCall)]
-        private static extern int InitCheckScriptNative(int hWnd, int cInstance, IntPtr sKey, IntPtr isolatedPath);
+        private static extern int InitCheckScriptNative(
+            int hWnd, 
+            int cInstance, 
+            IntPtr sKey, 
+            IntPtr isolatedPath);
 
         /// <summary>
         /// IsIsolated
@@ -67,7 +75,8 @@ namespace ThinBasic.NET.Core
         /// <param name="lIndex">Index of the resource to get.</param>
         /// <returns>The resource as a string.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Resources_GetFile", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr ResourcesGetFileNative(int lIndex);
+        private static extern IntPtr ResourcesGetFileNative(
+            int lIndex);
 
         /// <summary>
         /// Resources_GetBuffer
@@ -75,7 +84,8 @@ namespace ThinBasic.NET.Core
         /// <param name="lIndex">Index of the resource to get.</param>
         /// <returns>The resource as a string.</returns>
         [DllImport("thinCore.dll", EntryPoint = "thinBasic_Resources_GetBuffer", CallingConvention = CallingConvention.StdCall)]
-        private static extern IntPtr ResourcesGetBufferNative(int lIndex);
+        private static extern IntPtr ResourcesGetBufferNative(
+            int lIndex);
 
         /// <summary>
         /// Initialize thinCore in isolation mode using <paramref name="isolatedPath"/> for extracted modules/DLLs.
@@ -85,7 +95,11 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey">The key to use for the isolated path.</param>
         /// <param name="isolatedPath">The path to the isolated resources.</param>
         /// <returns>The handle to the isolated instance.</returns>
-        public static int InitIsolated(int hWnd, int cInstance, string sKey, string isolatedPath)
+        public static int InitIsolated(
+            int hWnd, 
+            int cInstance, 
+            string sKey, 
+            string isolatedPath)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(sKey);
             IntPtr pPath = AnsiBStrMarshal.Alloc(isolatedPath);
@@ -109,7 +123,11 @@ namespace ThinBasic.NET.Core
         /// <param name="sKey">The key to use for the isolated path.</param>
         /// <param name="isolatedPath">The path to the isolated resources.</param>
         /// <returns>The handle to the isolated instance.</returns>
-        public static int InitCheckScript(int hWnd, int cInstance, string sKey, string isolatedPath)
+        public static int InitCheckScript(
+            int hWnd, 
+            int cInstance, 
+            string sKey, 
+            string isolatedPath)
         {
             IntPtr pKey = AnsiBStrMarshal.Alloc(sKey);
             IntPtr pPath = AnsiBStrMarshal.Alloc(isolatedPath);
@@ -166,7 +184,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="lIndex">Index of the resource to get.</param>
         /// <returns>The resource as a string.</returns>
-        public static string ResourcesGetFile(int lIndex)
+        public static string ResourcesGetFile(
+            int lIndex)
         {
             return AnsiBStrMarshal.PtrToStringAndFree(ResourcesGetFileNative(lIndex));
         }
@@ -176,7 +195,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="lIndex">Index of the resource to get.</param>
         /// <returns>The resource as a string.</returns>
-        public static string ResourcesGetBuffer(int lIndex)
+        public static string ResourcesGetBuffer(
+            int lIndex)
         {
             return AnsiBStrMarshal.PtrToStringAndFree(ResourcesGetBufferNative(lIndex));
         }

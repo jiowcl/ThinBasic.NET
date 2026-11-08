@@ -144,7 +144,8 @@ namespace ThinBasic.NET.Core
         /// <summary>
         /// VariableIsArray
         /// </summary>
-        public static int VariableIsArray(string vName)
+        public static int VariableIsArray(
+            string vName)
         {
             IntPtr pName = AnsiBStrMarshal.Alloc(vName);
 

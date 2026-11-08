@@ -50,7 +50,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="value">The string to allocate.</param>
         /// <returns>The allocated BSTR.</returns>
-        public static IntPtr Alloc(string value)
+        public static IntPtr Alloc(
+            string value)
         {
             if (value == null)
             {
@@ -79,7 +80,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="bstr">The BSTR to free.</param>
         /// <returns>Returns void.</returns>
-        public static void Free(IntPtr bstr)
+        public static void Free(
+            IntPtr bstr)
         {
             if (bstr != IntPtr.Zero)
             {
@@ -92,7 +94,8 @@ namespace ThinBasic.NET.Core
         /// </summary>
         /// <param name="bstr">The BSTR to convert to a string.</param>
         /// <returns>The string representation of the BSTR.</returns>
-        public static string PtrToStringAndFree(IntPtr bstr)
+        public static string PtrToStringAndFree(
+            IntPtr bstr)
         {
             if (bstr == IntPtr.Zero)
             {
