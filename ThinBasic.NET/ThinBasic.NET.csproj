@@ -4,7 +4,7 @@
     <TargetFrameworks>net11.0-windows;net10.0-windows;net9.0-windows;net8.0-windows</TargetFrameworks>
     <Company>Inwazy Technology</Company>
     <Copyright>Ji-Feng Tsai</Copyright>
-    <Description>.NET 8/9/10 Windows x86 wrapper for ThinBasic (thinCore.dll): embed scripts, host keywords, parser helpers, arrays, isolation, hash tables, and module classes.</Description>
+    <Description>.NET 8/9/10/11 Windows x86 wrapper for ThinBasic (thinCore.dll): embed scripts, host keywords, parser helpers, arrays, isolation, hash tables, and module classes.</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
