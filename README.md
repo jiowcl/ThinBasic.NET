@@ -15,7 +15,7 @@ Embed ThinBasic scripts in .NET apps, inject host constants/keywords, and parse 
 |------|--------|
 | OS | Windows 10+ |
 | Architecture | **x86 only** (`PlatformTarget=x86`) |
-| .NET | **net8.0-windows / net9.0-windows / net10.0-windows** |
+| .NET | **net8.0-windows / net9.0-windows / net10.0-windows / net11.0-windows** |
 | Native | Ships `thinCore.dll` + `thinBasic_UI.dll` (ThinBasic 1.14 era) |
 
 x64 / Arm64 processes cannot load the bundled 32-bit native DLLs.
@@ -135,7 +135,7 @@ Thinbasic.LoadSymbol("HostAdd", () =>
 }, Enums.ForceOverWrite);
 ```
 
-### Isolation
+### Isolation  
 
 ```csharp
 string iso = Path.Combine(Path.GetTempPath(), "my-iso");
