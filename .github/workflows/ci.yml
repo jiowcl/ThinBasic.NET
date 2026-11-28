@@ -71,6 +71,26 @@ jobs:
           --no-build
           --output "${{ github.workspace }}/artifacts"
 
+      - name: Verify nupkg native dependencies
+        shell: pwsh
+        run: |
+          $nupkg = Get-ChildItem "${{ github.workspace }}/artifacts" -Filter '*.nupkg' | Select-Object -First 1
+          if (-not $nupkg) { throw 'No .nupkg found in artifacts.' }
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $zip = [System.IO.Compression.ZipFile]::OpenRead($nupkg.FullName)
+          try {
+            foreach ($path in @(
+                'runtimes/win-x86/native/thinCore.dll',
+                'runtimes/win-x86/native/thinBasic_UI.dll',
+                'build/ThinBasic.NET.props'
+              )) {
+              $entry = $zip.Entries | Where-Object { $_.FullName -eq $path }
+              if (-not $entry) { throw "nupkg missing $path" }
+            }
+          } finally {
+            $zip.Dispose()
+          }
+
       - name: Upload nupkg
         uses: actions/upload-artifact@v4
         with:

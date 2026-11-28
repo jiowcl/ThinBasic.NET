@@ -28,6 +28,8 @@ PM> Install-Package ThinBasic.NET
 
 Consumer projects must target **Windows x86** (or Prefer 32-bit) so `thinCore.dll` can load.
 
+The package ships native DLLs under `runtimes/win-x86/native` and copies them to your build output root on restore/build.
+
 ## Important notes
 
 ### Strings (ANSI BSTR)

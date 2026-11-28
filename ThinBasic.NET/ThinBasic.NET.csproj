@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/jiowcl/ThinBasic.NET</RepositoryUrl>
-    <PackageReleaseNotes>Module-class APIs (ClassAdd, ClassAddMethod, ClassAddProperty, ParseClass); Hash table APIs; Isolation APIs.</PackageReleaseNotes>
+    <PackageReleaseNotes>NuGet package includes thinCore.dll and thinBasic_UI.dll (runtimes/win-x86/native, copied to consumer output). Module-class, Hash, and Isolation APIs.</PackageReleaseNotes>
     <PackageTags>thinbasic;thincore;scripting;pinvoke;windows;x86</PackageTags>
     <Authors>Jiowcl</Authors>
     <PackageProjectUrl>https://github.com/jiowcl/ThinBasic.NET</PackageProjectUrl>
@@ -38,7 +38,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="thinbasic.net.ico" />
+    <Content Include="thinbasic.net.ico">
+      <Pack>false</Pack>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,15 +54,28 @@
     </None>
   </ItemGroup>
 
+  <!-- Native DLLs: output copy for build/ProjectReference; runtimes/* + build/*.props for NuGet consumers. -->
   <ItemGroup>
-    <ContentWithTargetPath Include="Lib\thinBasic_UI.dll" Pack="true">
+    <None Include="Lib\thinBasic_UI.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>thinBasic_UI.dll</TargetPath>
-    </ContentWithTargetPath>
-    <ContentWithTargetPath Include="Lib\thinCore.dll" Pack="true">
+      <Link>thinBasic_UI.dll</Link>
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+    </None>
+    <None Include="Lib\thinCore.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <TargetPath>thinCore.dll</TargetPath>
-    </ContentWithTargetPath>
+      <Link>thinCore.dll</Link>
+      <Pack>true</Pack>
+      <PackagePath>runtimes/win-x86/native</PackagePath>
+    </None>
+    <None Include="build\ThinBasic.NET.props">
+      <Pack>true</Pack>
+      <PackagePath>build</PackagePath>
+    </None>
+    <None Include="build\ThinBasic.NET.props">
+      <Pack>true</Pack>
+      <PackagePath>buildTransitive</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

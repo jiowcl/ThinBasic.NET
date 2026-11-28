@@ -1,0 +1,12 @@
+<Project>
+  <ItemGroup Condition="'$(TargetFramework)' != ''">
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\thinCore.dll"
+             Link="thinCore.dll"
+             CopyToOutputDirectory="PreserveNewest"
+             Visible="false" />
+    <Content Include="$(MSBuildThisFileDirectory)..\runtimes\win-x86\native\thinBasic_UI.dll"
+             Link="thinBasic_UI.dll"
+             CopyToOutputDirectory="PreserveNewest"
+             Visible="false" />
+  </ItemGroup>
+</Project>
